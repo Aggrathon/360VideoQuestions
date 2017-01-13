@@ -30,3 +30,7 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+### Project ###
+/Assets/Editor/scenarios/
+/Assets/Editor/scenarios.meta
