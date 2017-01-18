@@ -71,7 +71,7 @@ public class FileExplorer : MonoBehaviour {
 		return "";
 	}
 
-	void RefreshFolder()
+	public void RefreshFolder()
 	{
 		for (int i = scenarioButtonHolder.childCount - 1; i >= 0; i--)
 		{
