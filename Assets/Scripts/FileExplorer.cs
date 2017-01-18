@@ -2,7 +2,6 @@
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.VR;
 
 public class FileExplorer : MonoBehaviour {
 
@@ -13,11 +12,6 @@ public class FileExplorer : MonoBehaviour {
 	public string dataFolder { get; protected set; }
 	public GameObject scenarioButton;
 	public Transform scenarioButtonHolder;
-
-	void OnEnable() {
-		VRSettings.enabled = false;
-		Screen.orientation = ScreenOrientation.Portrait;
-	}
 
 	void Start()
 	{
@@ -34,12 +28,6 @@ public class FileExplorer : MonoBehaviour {
 			}
 			RefreshFolder();
 		}
-	}
-
-	void Update()
-	{
-		if (Input.GetKeyUp(KeyCode.Escape))
-			Application.Quit();
 	}
 
 	string GetScenarioFolder()
