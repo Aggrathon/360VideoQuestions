@@ -324,8 +324,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 302143305}
   m_HandleRect: {fileID: 302143304}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 0.99999994
+  m_Value: 1
+  m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -423,6 +423,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 322115801}
+  - component: {fileID: 322115802}
   m_Layer: 0
   m_Name: SCENARIO
   m_TagString: Untagged
@@ -446,6 +447,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &322115802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 322115800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbaf1648a2f526d4abef542e4cc76da7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stateManager: {fileID: 1933743004}
+  colorLayer: {fileID: 1642915073}
+  sceneChangeSpeed: 0.5
 --- !u!1 &517800258
 GameObject:
   m_ObjectHideFlags: 0
@@ -831,7 +846,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000030517578, y: -0.000030517578}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &991106556
@@ -1565,6 +1580,7 @@ GameObject:
   - component: {fileID: 1642915070}
   - component: {fileID: 1642915072}
   - component: {fileID: 1642915071}
+  - component: {fileID: 1642915073}
   m_Layer: 0
   m_Name: ColorLayer
   m_TagString: Untagged
@@ -1626,6 +1642,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1642915069}
   m_Mesh: {fileID: 4300000, guid: e4ec0843ca2c87444b8be4a826ee6d76, type: 3}
+--- !u!114 &1642915073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1642915069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c0424b0383967b4889f7c4381d2e5a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cycleColors: 1
 --- !u!1 &1643756183
 GameObject:
   m_ObjectHideFlags: 0
@@ -2197,10 +2225,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c312bc718be0a5b46a4f40430e106de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 0
+  state: 1
   menu: {fileID: 1763772727}
-  scenario: {fileID: 322115800}
+  scenario: {fileID: 322115802}
   menuInfo: {fileID: 1016303731}
+  defScen: {fileID: 11400000, guid: 95bd893c386163149b79084113daf042, type: 2}
 --- !u!1 &2000778102
 GameObject:
   m_ObjectHideFlags: 0

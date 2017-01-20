@@ -9,10 +9,11 @@ public class AppStateManager : MonoBehaviour {
 		scenario
 	}
 
-	public AppState state;
-	public GameObject menu;
-	public GameObject scenario;
-	public InformationPanel menuInfo;
+	[SerializeField] AppState state;
+	[SerializeField] GameObject menu;
+	[SerializeField] ScenarioManager scenario;
+	[SerializeField] InformationPanel menuInfo;
+	public Scenario defScen;
 
 	void Start()
 	{
@@ -22,7 +23,7 @@ public class AppStateManager : MonoBehaviour {
 				EnterMenu();
 				break;
 			case AppState.scenario:
-				EnterScenario();
+				scenario.LoadScenario((RuntimeScenario)defScen);
 				break;
 		}
 	}
@@ -50,21 +51,21 @@ public class AppStateManager : MonoBehaviour {
 		}
 	}
 
-	void EnterMenu()
+	public void EnterMenu()
 	{
 		VRSettings.enabled = false;
 		Screen.orientation = ScreenOrientation.Portrait;
 		state = AppState.menu;
 		menu.SetActive(true);
-		scenario.SetActive(false);
+		scenario.gameObject.SetActive(false);
 	}
 
-	void EnterScenario()
+	public void EnterScenario()
 	{
 		VRSettings.enabled = true;
 		Screen.orientation = ScreenOrientation.Landscape;
 		state = AppState.scenario;
 		menu.SetActive(false);
-		scenario.SetActive(true);
+		scenario.gameObject.SetActive(true);
 	}
 }

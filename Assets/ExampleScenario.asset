@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f093eef5b64828040bb6dd6cde167800, type: 3}
+  m_Name: ExampleScenario
+  m_EditorClassIdentifier: 
+  scenes:
+  - name: color1
+    background: color:red
+    ending: 
+    actions:
+    - time: 3
+      action: color2
+      title: 
+      options: []
+  - name: color2
+    background: color:green
+    ending: 
+    actions:
+    - time: 2
+      action: restart
+      title: 
+      options: []
+  - name: restart
+    background: 
+    ending: 
+    actions:
+    - time: 0
+      action: 
+      title: Restart?
+      options:
+      - image: 
+        text: Yes
+        action: color1
+      - image: 
+        text: No
+        action: exit
