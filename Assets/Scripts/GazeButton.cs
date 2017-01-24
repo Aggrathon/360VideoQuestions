@@ -8,6 +8,8 @@ public class GazeButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 	public float activationTime = 3f;
 	public Image progressbar;
 
+	public System.Action onActivation;
+
 	private float progress = 0f;
 	private bool progressing = false;
 
@@ -81,7 +83,14 @@ public class GazeButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
 	void Activate()
 	{
-		Debug.Log("Activation");
+		if(onActivation != null)
+		{
+			onActivation();
+		}
+		else
+		{
+			Debug.Log("Empty Activation");
+		}
 		progress = 1f;
 		progressbar.fillAmount = progress;
 		progressing = false;

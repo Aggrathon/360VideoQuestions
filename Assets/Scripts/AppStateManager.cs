@@ -13,7 +13,7 @@ public class AppStateManager : MonoBehaviour {
 	[SerializeField] GameObject menu;
 	[SerializeField] ScenarioManager scenario;
 	[SerializeField] InformationPanel menuInfo;
-	public Scenario defScen;
+	public EditorScenario defScen;
 
 	void Start()
 	{
@@ -23,7 +23,7 @@ public class AppStateManager : MonoBehaviour {
 				EnterMenu();
 				break;
 			case AppState.scenario:
-				scenario.LoadScenario((RuntimeScenario)defScen);
+				scenario.LoadScenario((Scenario)defScen);
 				break;
 		}
 	}

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Security;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,8 @@ public class FileExplorer : MonoBehaviour {
 	public string dataFolder { get; protected set; }
 	public GameObject scenarioButton;
 	public Transform scenarioButtonHolder;
+	
+	public EditorScenario exampleScenario;
 
 	void Start()
 	{
@@ -108,10 +111,49 @@ public class FileExplorer : MonoBehaviour {
 	{
 		if (dataFolder == "")
 			return;
-		if(!Directory.CreateDirectory(Path.Combine(dataFolder, "Example")).Exists)
+		string path = Path.Combine(dataFolder, "Example");
+		if (!Directory.CreateDirectory(path).Exists)
 		{
 			DebugText.LogError("Could not create Example folder");
 		}
+		else
+		{
+			try
+			{
+				System.IO.File.WriteAllText(Path.Combine(path, "scenes.json"), exampleScenario.ToJson());
+				for (int i = 0; i < exampleScenario.images.Length; i++)
+				{
+					if (exampleScenario.images[i].name != "" && exampleScenario.images[i].image != null)
+					{
+						SaveImage(exampleScenario.images[i].image, Path.Combine(path, exampleScenario.images[i].name));
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				DebugText.LogError("Could not save example scenario (" + e.GetType().ToString() + ")");
+			}
+		}
 		RefreshFolder();
+		DebugText.Log("Created Example Scenario");
+	}
+
+	public static void SaveImage(Texture2D image, string path)
+	{
+		try
+		{
+			System.IO.File.WriteAllBytes(path, image.EncodeToPNG());
+		}
+		catch (Exception e)
+		{
+			if (e is SecurityException || e is UnauthorizedAccessException)
+			{
+				DebugText.LogError("App not allowed to save image to " + path);
+			}
+			else
+			{
+				DebugText.LogError("Could not save image to " + path + " (" + e.GetType().ToString() + ")");
+			}
+		}
 	}
 }

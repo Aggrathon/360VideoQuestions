@@ -9,7 +9,7 @@ public class ScenarioManager : MonoBehaviour {
 	public ColorLayer colorLayer;
 	public float sceneChangeSpeed = 0.5f;
 
-	RuntimeScenario scenario;
+	Scenario scenario;
 	Scene currentScene;
 
 	public void LoadScenario(string folder)
@@ -23,7 +23,7 @@ public class ScenarioManager : MonoBehaviour {
 				if (Path.GetExtension(f) == "json")
 				{
 					if (scenario == null) {
-						scenario = RuntimeScenario.LoadJson(File.ReadAllText(Path.Combine(folder, f)));
+						scenario = Scenario.LoadJson(File.ReadAllText(Path.Combine(folder, f)));
 						nojson = false;
 					}
 					else
@@ -61,7 +61,7 @@ public class ScenarioManager : MonoBehaviour {
 		}
 	}
 
-	public void LoadScenario(RuntimeScenario rs)
+	public void LoadScenario(Scenario rs)
 	{
 		scenario = rs;
 		stateManager.EnterScenario();

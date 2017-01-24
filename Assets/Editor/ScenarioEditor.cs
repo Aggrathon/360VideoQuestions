@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(Scenario))]
+[CustomEditor(typeof(EditorScenario))]
 public class ScenarioEditor : Editor {
 
 	public string json;
@@ -12,7 +12,7 @@ public class ScenarioEditor : Editor {
 		EditorGUILayout.Space();
 		if(GUILayout.Button("Refresh JSON"))
 		{
-			json = JsonUtility.ToJson((target as Scenario), true);
+			json = (target as EditorScenario).ToJson();
 		}
 		EditorGUILayout.TextArea(json);
 	}
