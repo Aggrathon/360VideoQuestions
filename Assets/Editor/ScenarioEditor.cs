@@ -1,19 +1,25 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(EditorScenario))]
-public class ScenarioEditor : Editor {
+namespace aggrathon.vq360.data
+{
 
-	public string json;
-
-	public override void OnInspectorGUI()
+	[CustomEditor(typeof(EditorScenario))]
+	public class ScenarioEditor : Editor
 	{
-		base.OnInspectorGUI();
-		EditorGUILayout.Space();
-		if(GUILayout.Button("Refresh JSON"))
+
+		public string json;
+
+		public override void OnInspectorGUI()
 		{
-			json = (target as EditorScenario).ToJson();
+			base.OnInspectorGUI();
+			EditorGUILayout.Space();
+			if (GUILayout.Button("Refresh JSON"))
+			{
+				json = (target as EditorScenario).ToJson();
+			}
+			EditorGUILayout.TextArea(json);
 		}
-		EditorGUILayout.TextArea(json);
 	}
+
 }

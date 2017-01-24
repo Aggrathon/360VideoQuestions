@@ -1,26 +1,31 @@
 ﻿using UnityEngine;
 using System;
 
-[Serializable]
-public class Scenario
+namespace aggrathon.vq360.data
 {
-	public Scene[] scenes;
 
-	public static Scenario LoadJson(string json)
+	[Serializable]
+	public class Scenario
 	{
-		return JsonUtility.FromJson<Scenario>(json);
+		public Scene[] scenes;
+
+		public static Scenario LoadJson(string json)
+		{
+			return JsonUtility.FromJson<Scenario>(json);
+		}
+
+		public void AddJson(string json)
+		{
+			Scenario other = LoadJson(json);
+			CombineScenario(other);
+		}
+
+		public void CombineScenario(Scenario other)
+		{
+			int oldLen = scenes.Length;
+			Array.Resize<Scene>(ref scenes, scenes.Length + other.scenes.Length);
+			Array.Copy(other.scenes, 0, scenes, oldLen, other.scenes.Length);
+		}
 	}
 
-	public void AddJson(string json)
-	{
-		Scenario other = LoadJson(json);
-		CombineScenario(other);
-	}
-
-	public void CombineScenario(Scenario other)
-	{
-		int oldLen = scenes.Length;
-		Array.Resize<Scene>(ref scenes, scenes.Length + other.scenes.Length);
-		Array.Copy(other.scenes, 0, scenes, oldLen, other.scenes.Length);
-	}
 }

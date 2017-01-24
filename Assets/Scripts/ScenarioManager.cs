@@ -2,6 +2,7 @@
 using System.Collections;
 using System.IO;
 using UnityEngine;
+using aggrathon.vq360.data;
 
 public class ScenarioManager : MonoBehaviour {
 
@@ -105,10 +106,10 @@ public class ScenarioManager : MonoBehaviour {
 		{
 			currentScene = new Scene();
 			currentScene.background = "color:#333";
-			currentScene.actions = new Action[1];
-			currentScene.actions[0] = new Action();
-			currentScene.actions[0].time = 5f;
-			currentScene.actions[0].action = scenario.scenes[0].name;
+			currentScene.events = new aggrathon.vq360.data.Event[1];
+			currentScene.events[0] = new aggrathon.vq360.data.Event();
+			currentScene.events[0].time = 5f;
+			currentScene.events[0].action = scenario.scenes[0].name;
 		}
 		else
 		{
@@ -125,24 +126,24 @@ public class ScenarioManager : MonoBehaviour {
 		//TODO: Handle video
 
 		StopAllCoroutines();
-		for (int i = 0; i < currentScene.actions.Length; i++)
+		for (int i = 0; i < currentScene.events.Length; i++)
 		{
-			StartCoroutine(HandleAction(currentScene.actions[i]));
+			StartCoroutine(HandleEvent(currentScene.events[i]));
 		}
 	}
 
-	IEnumerator HandleAction(Action action)
+	IEnumerator HandleEvent(aggrathon.vq360.data.Event currentEvent)
 	{
-		yield return new WaitForSeconds(action.time);
-		if(action.action != "")
+		yield return new WaitForSeconds(currentEvent.time);
+		if(currentEvent.action != "")
 		{
-			if(action.action == "exit")
+			if(currentEvent.action == "exit")
 			{
 				UnloadScenario();
 			}
 			else
 			{
-				SwitchScene(action.action);
+				SwitchScene(currentEvent.action);
 			}
 		}
 		else

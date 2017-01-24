@@ -1,9 +1,14 @@
 ﻿
-[System.Serializable]
-public class Scene
+namespace aggrathon.vq360.data
 {
-	public string name;
-	public string background;
-	public string ending;
-	public Action[] actions;
+
+	[System.Serializable]
+	public class Scene
+	{
+		public string name;
+		public string background;
+		public string ending;
+		public Event[] events;
+	}
+
 }

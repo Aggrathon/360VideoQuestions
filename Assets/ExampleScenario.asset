@@ -15,7 +15,7 @@ MonoBehaviour:
   - name: color1
     background: color:red
     ending: 
-    actions:
+    events:
     - time: 3
       action: color2
       title: 
@@ -23,7 +23,7 @@ MonoBehaviour:
   - name: color2
     background: color:green
     ending: 
-    actions:
+    events:
     - time: 3
       action: restart
       title: 
@@ -31,7 +31,7 @@ MonoBehaviour:
   - name: restart
     background: bg.png
     ending: 
-    actions:
+    events:
     - time: 0
       action: 
       title: Restart?
@@ -49,3 +49,55 @@ MonoBehaviour:
     image: {fileID: 2800000, guid: e4365460c6c9e114397e10f1c9780d05, type: 3}
   - name: bg.png
     image: {fileID: 2800000, guid: 31b478e38e98d0246979ba9855a58268, type: 3}
+  instructions: 'HOW TO CREATE SCENARIOS
+
+    ===================
+
+
+    1. About Scenarios
+
+    Each scenario has its own folder. In this folder all videos, images, scenes and
+    logs are saved.
+
+    Each scenario may contain multiple scenes. These scenes are saved in .json files
+    (if multiple .json files are found in the folder all files will be read).
+
+
+    2. About Scenes
+
+    Scenes are the main buildingblocks for scenarios. The scenario begins with the
+    first scene (the topmost scene in the first file) and progresses through the scenes
+    until an end is reached. Each scene may define a background and multiple progressions
+    or interactions.
+
+
+    3. Configuration
+
+    As mentioned above, each scenario is configured with .json files. With these instructions
+    an example .json file (scenes.json) should also have been generated, that file
+    could be used as a base other scenarios. Here I will explain how to customise
+    different parts of a scenario.
+
+
+    3.1 JSON
+
+    The json format is quite simple. Each "object" is surrounded with ''{}''. All
+    objects can have many variables. All variables starts with a name (inside "")
+    followed with a colon (:) and the value. The values can be one of the following
+    types:
+
+    Text values (surrounded by "")
+
+    Number values
+
+    Other objects (surrounded by {})
+
+    Lists (surrounded by [])
+
+    Between the variables and elements of lists are commas (,). Please see the example
+    file for refrence (spaces are optional but helps readability).
+
+
+    3.2 Scene Configuration
+
+    Each scenario .json-file contains a list of scenes. '

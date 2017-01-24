@@ -3,6 +3,7 @@ using System.IO;
 using System.Security;
 using UnityEngine;
 using UnityEngine.UI;
+using aggrathon.vq360.data;
 
 public class FileExplorer : MonoBehaviour {
 
@@ -121,6 +122,7 @@ public class FileExplorer : MonoBehaviour {
 			try
 			{
 				System.IO.File.WriteAllText(Path.Combine(path, "scenes.json"), exampleScenario.ToJson());
+				System.IO.File.WriteAllText(Path.Combine(path, "instructions.txt"), exampleScenario.instructions);
 				for (int i = 0; i < exampleScenario.images.Length; i++)
 				{
 					if (exampleScenario.images[i].name != "" && exampleScenario.images[i].image != null)

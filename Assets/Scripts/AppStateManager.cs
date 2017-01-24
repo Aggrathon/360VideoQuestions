@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.VR;
+using aggrathon.vq360.data;
 
 public class AppStateManager : MonoBehaviour {
 

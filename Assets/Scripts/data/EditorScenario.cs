@@ -1,28 +1,35 @@
 ﻿using UnityEngine;
 using System;
 
-[CreateAssetMenu(fileName = "Scenario", menuName = "Scenario")]
-public class EditorScenario: ScriptableObject
+namespace aggrathon.vq360.data
 {
-	[Serializable]
-	public struct Image
+
+	[CreateAssetMenu(fileName = "Scenario", menuName = "Scenario")]
+	public class EditorScenario : ScriptableObject
 	{
-		public string name;
-		public Texture2D image;
+		[Serializable]
+		public struct Image
+		{
+			public string name;
+			public Texture2D image;
+		}
+
+		public Scene[] scenes;
+		public Image[] images;
+		[TextArea(3, 15)]
+		public string instructions;
+
+		public static explicit operator Scenario(EditorScenario s)
+		{
+			Scenario rs = new Scenario();
+			rs.scenes = s.scenes;
+			return rs;
+		}
+
+		public string ToJson()
+		{
+			return JsonUtility.ToJson((Scenario)this, true);
+		}
 	}
 
-	public Scene[] scenes;
-	public Image[] images;
-
-	public static explicit operator Scenario(EditorScenario s)
-	{
-		Scenario rs = new Scenario();
-		rs.scenes = s.scenes;
-		return rs;
-	}
-
-	public string ToJson()
-	{
-		return JsonUtility.ToJson((Scenario)this, true);
-	}
 }
