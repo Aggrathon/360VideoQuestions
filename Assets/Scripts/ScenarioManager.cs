@@ -21,7 +21,7 @@ public class ScenarioManager : MonoBehaviour {
 			bool nojson = true;
 			foreach (string f in files)
 			{
-				if (Path.GetExtension(f) == "json")
+				if (Path.GetExtension(f) == ".json")
 				{
 					if (scenario == null) {
 						scenario = Scenario.LoadJson(File.ReadAllText(Path.Combine(folder, f)));
@@ -34,15 +34,15 @@ public class ScenarioManager : MonoBehaviour {
 			if(scenario == null)
 			{
 				if (nojson)
-					DebugText.LogError("No scenario in folder: " + Path.GetDirectoryName(folder));
+					DebugText.LogError("No scenario in folder: " + folder);
 				else
-					DebugText.LogError("Could not load scenario from folder: " + Path.GetDirectoryName(folder));
+					DebugText.LogError("Could not load scenario from folder: " + folder);
 				UnloadScenario();
 			}
 		}
 		catch (Exception e)
 		{
-			DebugText.LogError("Could not load scenario from folder: " + Path.GetDirectoryName(folder));
+			DebugText.LogError("Could not load scenario from folder: " +folder);
 			Debug.LogException(e);
 			UnloadScenario();
 		}
@@ -52,7 +52,7 @@ public class ScenarioManager : MonoBehaviour {
 		}
 		else if (scenario.scenes.Length == 0)
 		{
-			DebugText.LogError("No scenes found in folder: " + Path.GetDirectoryName(folder));
+			DebugText.LogError("No scenes found in folder: " +folder);
 			UnloadScenario();
 		}
 		else

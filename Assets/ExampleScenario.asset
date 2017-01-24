@@ -49,55 +49,39 @@ MonoBehaviour:
     image: {fileID: 2800000, guid: e4365460c6c9e114397e10f1c9780d05, type: 3}
   - name: bg.png
     image: {fileID: 2800000, guid: 31b478e38e98d0246979ba9855a58268, type: 3}
-  instructions: 'HOW TO CREATE SCENARIOS
-
-    ===================
-
-
-    1. About Scenarios
-
-    Each scenario has its own folder. In this folder all videos, images, scenes and
-    logs are saved.
-
-    Each scenario may contain multiple scenes. These scenes are saved in .json files
-    (if multiple .json files are found in the folder all files will be read).
-
-
-    2. About Scenes
-
-    Scenes are the main buildingblocks for scenarios. The scenario begins with the
-    first scene (the topmost scene in the first file) and progresses through the scenes
-    until an end is reached. Each scene may define a background and multiple progressions
-    or interactions.
-
-
-    3. Configuration
-
-    As mentioned above, each scenario is configured with .json files. With these instructions
+  instructions: "HOW TO CREATE SCENARIOS\n===================\n\n1. About Scenarios\nEach
+    scenario has its own folder. In this folder all videos, images, scenes and logs
+    are saved. Each scenario may contain multiple scenes. These scenes are saved in
+    .json files (if multiple .json files are found in the folder all files will be
+    read).\n\n2. About Scenes\nScenes are the main building blocks for scenarios.
+    The scenario begins with the first scene (the topmost scene in the first file)
+    and progresses through the scenes until an end is reached. Each scene may define
+    a background and multiple progressions or interactions.\n\n3. Configuration\nAs
+    mentioned above, each scenario is configured with .json files. With these instructions
     an example .json file (scenes.json) should also have been generated, that file
     could be used as a base other scenarios. Here I will explain how to customise
-    different parts of a scenario.
-
-
-    3.1 JSON
-
-    The json format is quite simple. Each "object" is surrounded with ''{}''. All
-    objects can have many variables. All variables starts with a name (inside "")
-    followed with a colon (:) and the value. The values can be one of the following
-    types:
-
-    Text values (surrounded by "")
-
-    Number values
-
-    Other objects (surrounded by {})
-
-    Lists (surrounded by [])
-
-    Between the variables and elements of lists are commas (,). Please see the example
-    file for refrence (spaces are optional but helps readability).
-
-
-    3.2 Scene Configuration
-
-    Each scenario .json-file contains a list of scenes. '
+    different parts of a scenario.\n\n3.1 JSON\nThe json format is quite simple. Each
+    \"object\" is surrounded with '{}'. All objects can have many variables. All variables
+    starts with a name (inside \"\") followed with a colon (:) and the value. The
+    values can be one of the following types:\nText values (surrounded by \"\")\nNumber
+    values\nOther objects (surrounded by {})\nLists (surrounded by [])\nBetween the
+    variables and elements of lists are commas (,). Please see the example file for
+    reference (spaces are optional but helps readability).\n\n3.2 Scene Configuration\nEach
+    scenario .json-file contains a list of scenes. A scene object has the following
+    variables:\r\n\u201Cname\u201D: The name of the scene\r\n\u201Cbackground\u201D:
+    The background of the scene, can be a video, an image, a color or nothing (uses
+    the same background as the previous scene)\r\n\u201Cending\u201D: If the background
+    is a video then what should happen when the video ends, the options are \u201Cloop\u201D
+    (the video loops), \u201Cexit\u201D (finishes the scenario) or the name of a scene
+    (switches to that scene)\r\n\u201Cevents\u201D: A list of things that happens
+    during a scene (see below)\r\n\r\n3.3 Event Configuration\r\nThe action objects
+    have the following variables:\r\n\u201Ctime\u201D: When the action will happen\r\n\u201Caction\u201D:
+    The options are \u201Cexit\u201D (finishes the scenario), the name of a scene
+    (switches to that scene) or nothing (if this is a question)\r\n\u201Ctitle\u201D:
+    If this is a question then place the question text here\r\n\u201Coptions\u201D:
+    If this is a question then here is a list of options (see below)\r\n\r\n3.4 Option
+    Configuration\r\nThe option objects have the following variables:\r\n\u201Cimage\u201D:
+    The name of an image (if this option has one)\r\n\u201Ctext\u201D:\tAn optional
+    description of the option\r\n\u201Caction\u201D: What should happen when this
+    option is selected, the options are \u201Cexit\u201D (finishes the scenario) or
+    the name of a scenario (switches to that scenario)"

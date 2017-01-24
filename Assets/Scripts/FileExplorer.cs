@@ -14,7 +14,7 @@ public class FileExplorer : MonoBehaviour {
 	public string dataFolder { get; protected set; }
 	public GameObject scenarioButton;
 	public Transform scenarioButtonHolder;
-	
+	public ScenarioManager scenarioManager;
 	public EditorScenario exampleScenario;
 
 	void Start()
@@ -73,7 +73,9 @@ public class FileExplorer : MonoBehaviour {
 		foreach (string dir in dirs)
 		{
 			GameObject button = GameObject.Instantiate<GameObject>(scenarioButton, scenarioButtonHolder, false);
-			//button.GetComponent<Button>().onClick.AddListener()
+			button.GetComponent<Button>().onClick.AddListener(() => {
+				scenarioManager.LoadScenario(Path.Combine(dataFolder, dir));
+			});
 			button.GetComponentInChildren<Text>().text = Path.GetFileName(dir);
 		}
 	}
