@@ -47,7 +47,6 @@ public class FileExplorer : MonoBehaviour {
 			{
 				string docs = jc.GetStatic<string>("DIRECTORY_DOCUMENTS");
 				string root = jc.CallStatic<AndroidJavaObject>("getExternalStoragePublicDirectory", docs).Call<string>("getPath");
-				DebugText.Log("Android Enviroment Documents: " + root);
 				string folder = Path.Combine(root, FOLDER_NAME);
 				if (Directory.CreateDirectory(folder).Exists)
 				{

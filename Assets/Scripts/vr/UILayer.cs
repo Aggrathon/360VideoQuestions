@@ -4,25 +4,24 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.VR;
 
 public class UILayer : MonoBehaviour {
 
 	public Transform buttonHolder;
 	public float buttonAngle = 40f;
-	new Transform camera;
 
 	void OnEnable()
 	{
-		camera = Camera.main.transform;
 		Vector3 rot = transform.rotation.eulerAngles;
-		rot.y = camera.eulerAngles.y;
+		rot.y = InputTracking.GetLocalRotation(VRNode.Head).eulerAngles.y;
 		transform.eulerAngles = rot;
 	}
 	
 	void Update () {
 		//Reset UI rotation
-		Vector3 camRot = camera.rotation.eulerAngles;
-		if (camRot.x < - 70f && camRot.x > -89f)
+		Vector3 camRot = InputTracking.GetLocalRotation(VRNode.Head).eulerAngles;
+		if (camRot.x > 70f && camRot.x < 89.9f)
 		{
 			Vector3 rot = transform.rotation.eulerAngles;
 			rot.y = camRot.y;
