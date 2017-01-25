@@ -290,15 +290,15 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1256233211314350, guid: 7b5ba8303a705544c9a6b95289ec8154, type: 2}
-      propertyPath: m_Name
-      value: Button (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 223404064994240734, guid: 7b5ba8303a705544c9a6b95289ec8154,
         type: 2}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 2083524465}
+    - target: {fileID: 1256233211314350, guid: 7b5ba8303a705544c9a6b95289ec8154, type: 2}
+      propertyPath: m_Name
+      value: Button (1)
+      objectReference: {fileID: 0}
     - target: {fileID: 224704706128131028, guid: 7b5ba8303a705544c9a6b95289ec8154,
         type: 2}
       propertyPath: m_AnchorMin.y
@@ -557,11 +557,6 @@ Prefab:
       propertyPath: m_SizeDelta.y
       value: 28
       objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_SizeDelta.y
-      value: 333
-      objectReference: {fileID: 0}
     - target: {fileID: 1256233211314350, guid: 7b5ba8303a705544c9a6b95289ec8154, type: 2}
       propertyPath: m_Name
       value: Button (3)
@@ -572,28 +567,8 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
         type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0.08715578
-      objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 0.9961947
-      objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_SizeDelta.x
-      value: 300
-      objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: -0.4
+      propertyPath: m_SizeDelta.y
+      value: 333
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7b5ba8303a705544c9a6b95289ec8154, type: 2}
@@ -1469,7 +1444,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: -9.999985, y: -100}
+  m_AnchoredPosition: {x: -10.0000305, y: -100}
   m_SizeDelta: {x: 390, y: 0}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1016303726
@@ -1740,11 +1715,6 @@ Prefab:
       propertyPath: m_SizeDelta.y
       value: 28
       objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_SizeDelta.y
-      value: 333
-      objectReference: {fileID: 0}
     - target: {fileID: 1256233211314350, guid: 7b5ba8303a705544c9a6b95289ec8154, type: 2}
       propertyPath: m_Name
       value: Button (8)
@@ -1755,28 +1725,8 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
         type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0.08715578
-      objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 0.9961947
-      objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_SizeDelta.x
-      value: 300
-      objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: -0.4
+      propertyPath: m_SizeDelta.y
+      value: 333
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7b5ba8303a705544c9a6b95289ec8154, type: 2}
@@ -2034,11 +1984,6 @@ Prefab:
       propertyPath: m_SizeDelta.y
       value: 28
       objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_SizeDelta.y
-      value: 333
-      objectReference: {fileID: 0}
     - target: {fileID: 1256233211314350, guid: 7b5ba8303a705544c9a6b95289ec8154, type: 2}
       propertyPath: m_Name
       value: Button (9)
@@ -2049,28 +1994,8 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
         type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0.08715578
-      objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 0.9961947
-      objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_SizeDelta.x
-      value: 300
-      objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: -0.4
+      propertyPath: m_SizeDelta.y
+      value: 333
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7b5ba8303a705544c9a6b95289ec8154, type: 2}
@@ -2184,11 +2109,6 @@ Prefab:
       propertyPath: m_SizeDelta.y
       value: 28
       objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_SizeDelta.y
-      value: 333
-      objectReference: {fileID: 0}
     - target: {fileID: 1256233211314350, guid: 7b5ba8303a705544c9a6b95289ec8154, type: 2}
       propertyPath: m_Name
       value: Button (6)
@@ -2199,28 +2119,8 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
         type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0.08715578
-      objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 0.9961947
-      objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_SizeDelta.x
-      value: 300
-      objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: -0.4
+      propertyPath: m_SizeDelta.y
+      value: 333
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7b5ba8303a705544c9a6b95289ec8154, type: 2}
@@ -2646,11 +2546,6 @@ Prefab:
       propertyPath: m_SizeDelta.y
       value: 28
       objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_SizeDelta.y
-      value: 333
-      objectReference: {fileID: 0}
     - target: {fileID: 1256233211314350, guid: 7b5ba8303a705544c9a6b95289ec8154, type: 2}
       propertyPath: m_Name
       value: Button (4)
@@ -2661,28 +2556,8 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
         type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0.08715578
-      objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 0.9961947
-      objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_SizeDelta.x
-      value: 300
-      objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: -0.4
+      propertyPath: m_SizeDelta.y
+      value: 333
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7b5ba8303a705544c9a6b95289ec8154, type: 2}
@@ -3233,11 +3108,6 @@ Prefab:
       propertyPath: m_SizeDelta.y
       value: 28
       objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_SizeDelta.y
-      value: 333
-      objectReference: {fileID: 0}
     - target: {fileID: 1256233211314350, guid: 7b5ba8303a705544c9a6b95289ec8154, type: 2}
       propertyPath: m_Name
       value: Button (5)
@@ -3248,28 +3118,8 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
         type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0.08715578
-      objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 0.9961947
-      objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_SizeDelta.x
-      value: 300
-      objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: -0.4
+      propertyPath: m_SizeDelta.y
+      value: 333
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7b5ba8303a705544c9a6b95289ec8154, type: 2}
@@ -3617,11 +3467,6 @@ Prefab:
       propertyPath: m_SizeDelta.y
       value: 28
       objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_SizeDelta.y
-      value: 333
-      objectReference: {fileID: 0}
     - target: {fileID: 1256233211314350, guid: 7b5ba8303a705544c9a6b95289ec8154, type: 2}
       propertyPath: m_Name
       value: Button (2)
@@ -3632,28 +3477,8 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
         type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0.08715578
-      objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 0.9961947
-      objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_SizeDelta.x
-      value: 300
-      objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: -0.4
+      propertyPath: m_SizeDelta.y
+      value: 333
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7b5ba8303a705544c9a6b95289ec8154, type: 2}
@@ -4292,11 +4117,6 @@ Prefab:
       propertyPath: m_SizeDelta.y
       value: 28
       objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_SizeDelta.y
-      value: 333
-      objectReference: {fileID: 0}
     - target: {fileID: 1256233211314350, guid: 7b5ba8303a705544c9a6b95289ec8154, type: 2}
       propertyPath: m_Name
       value: Button (7)
@@ -4307,28 +4127,8 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
         type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0.08715578
-      objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 0.9961947
-      objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_SizeDelta.x
-      value: 300
-      objectReference: {fileID: 0}
-    - target: {fileID: 224839768109129326, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: -0.4
+      propertyPath: m_SizeDelta.y
+      value: 333
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7b5ba8303a705544c9a6b95289ec8154, type: 2}
