@@ -41,7 +41,7 @@ public class UILayer : MonoBehaviour {
 			transform.GetChild(0).gameObject.SetActive(false);
 		}
 
-		buttonHolder.eulerAngles = new Vector3(0, -(question.options.Length - 1) * buttonAngle * 0.5f, 0);
+		buttonHolder.localEulerAngles = new Vector3(0, -(question.options.Length - 1) * buttonAngle * 0.5f, 0);
 
 		if(question.options.Length > buttonHolder.childCount)
 		{

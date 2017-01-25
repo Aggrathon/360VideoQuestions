@@ -56,7 +56,7 @@ public class FileExplorer : MonoBehaviour {
 		}
 		catch (Exception e)
 		{
-			DebugText.Log(string.Format("<color=red>{0}</color>", e.Message));
+			DebugText.LogError(e.Message);
 		}
 #endif
 		return "";
