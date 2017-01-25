@@ -727,10 +727,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 322115800}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbaf1648a2f526d4abef542e4cc76da7, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ed9d248a8a9dd949b7b8224affef024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   stateManager: {fileID: 1933743004}
+  videoLayer: {fileID: 1459345217}
+  photoLayer: {fileID: 1043398027}
   colorLayer: {fileID: 1642915073}
   uiLayer: {fileID: 1837636289}
   sceneChangeSpeed: 0.5
@@ -2225,6 +2227,7 @@ GameObject:
   - component: {fileID: 1459345215}
   - component: {fileID: 1459345214}
   - component: {fileID: 1459345213}
+  - component: {fileID: 1459345217}
   m_Layer: 0
   m_Name: VideoLayer
   m_TagString: Untagged
@@ -2398,6 +2401,17 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1459345211}
   m_Mesh: {fileID: 4300000, guid: e4ec0843ca2c87444b8be4a826ee6d76, type: 3}
+--- !u!114 &1459345217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1459345211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6464693ecfee7804f96d797222da0bae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1570596752
 GameObject:
   m_ObjectHideFlags: 0

@@ -23,20 +23,17 @@ public class VrButton : MonoBehaviour {
 		}
 		if (image != "")
 		{
-			try
+			Texture2D tex = Utils.LoadImage(image);
+			if (tex.width+tex.height < 1)
 			{
-				byte[] data = File.ReadAllBytes(image);
-				Texture2D tex = new Texture2D(0, 0);
-				tex.LoadImage(data, true);
+				this.image.gameObject.SetActive(false);
+			}
+			else
+			{
 				this.image.preserveAspect = true;
 				this.image.type = Image.Type.Simple;
 				this.image.sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
 				this.image.gameObject.SetActive(true);
-			}
-			catch (Exception e)
-			{
-				DebugText.LogError("Could not load image '" + image + "' (" + e.GetType().ToString() + ")");
-				this.image.gameObject.SetActive(false);
 			}
 		}
 		else

@@ -2,11 +2,14 @@
 using System.Collections;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Video;
 using aggrathon.vq360.data;
 
 public class ScenarioManager : MonoBehaviour {
 
 	public AppStateManager stateManager;
+	public VideoLayer videoLayer;
+	public MeshRenderer photoLayer;
 	public ColorLayer colorLayer;
 	public UILayer uiLayer;
 	public float sceneChangeSpeed = 0.5f;
@@ -100,11 +103,12 @@ public class ScenarioManager : MonoBehaviour {
 	void SwitchScene(Scene scene)
 	{
 		uiLayer.gameObject.SetActive(false);
+		StopAllCoroutines();
 
-		if(scene == null)
+		if (scene == null)
 		{
 			currentScene = new Scene();
-			currentScene.background = "color:#333";
+			currentScene.background = "#333";
 			currentScene.events = new aggrathon.vq360.data.Event[1];
 			currentScene.events[0] = new aggrathon.vq360.data.Event();
 			currentScene.events[0].time = 5f;
@@ -115,16 +119,52 @@ public class ScenarioManager : MonoBehaviour {
 			currentScene = scene;
 		}
 
-		if(!File.Exists(Path.Combine(scenarioFolder, currentScene.background)))
+		if (currentScene.background != "")
 		{
-			Color c = Color.black;
-			ColorUtility.TryParseHtmlString(currentScene.background.Substring(6), out c);
-			colorLayer.SetColor(c, sceneChangeSpeed);
-		}
-		//TODO: Handle image
-		//TODO: Handle video
+			if (!File.Exists(Path.Combine(scenarioFolder, currentScene.background)))
+			{
+				Color c = Color.black;
+				ColorUtility.TryParseHtmlString(currentScene.background, out c);
+				colorLayer.SetColor(c, colorLayer.gameObject.activeSelf? sceneChangeSpeed *2f : sceneChangeSpeed);
 
-		StopAllCoroutines();
+				if (videoLayer.gameObject.activeSelf)
+					videoLayer.Hide(sceneChangeSpeed);
+				if (photoLayer.gameObject.activeSelf)
+					StartCoroutine(Utils.RunLater(() => photoLayer.gameObject.SetActive(false), new WaitForSeconds(sceneChangeSpeed)));
+			}
+			else
+			{
+				string ext = Path.GetExtension(currentScene.background).ToLower();
+				if (ext == ".png" || ext == ".jpg" || ext == ".jpeg")
+				{
+					photoLayer.material.mainTexture = Utils.LoadImage(Path.Combine(scenarioFolder, currentScene.background));
+
+					colorLayer.Flash(sceneChangeSpeed);
+					if (!photoLayer.gameObject.activeSelf)
+						StartCoroutine(Utils.RunLater(() => photoLayer.gameObject.SetActive(true), new WaitForSeconds(sceneChangeSpeed*0.5f)));
+					if (videoLayer.gameObject.activeSelf)
+						videoLayer.Hide(sceneChangeSpeed*0.5f);
+				}
+				else if (ext == ".mp4")
+				{
+					videoLayer.SetVideo(Path.Combine(scenarioFolder, currentScene.background), currentScene.ending, HandleAction, sceneChangeSpeed*0.5f);
+
+					colorLayer.Flash(sceneChangeSpeed);
+					if (photoLayer.gameObject.activeSelf)
+						StartCoroutine(Utils.RunLater(() => photoLayer.gameObject.SetActive(false), new WaitForSeconds(sceneChangeSpeed*0.5f)));
+				}
+				else
+				{
+					DebugText.LogImportant("Unsupported background file format in scene '" + currentScene.name + "'");
+					videoLayer.ClearAction();
+				}
+			}
+		}
+		else
+		{
+			videoLayer.ClearAction();
+		}
+
 		for (int i = 0; i < currentScene.events.Length; i++)
 		{
 			StartCoroutine(HandleEvent(currentScene.events[i]));

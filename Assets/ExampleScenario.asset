@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EditorScenario
   scenes:
   - name: color1
-    background: color:red
+    background: red
     ending: 
     events:
     - time: 3
@@ -21,7 +21,7 @@ MonoBehaviour:
       title: 
       options: []
   - name: color2
-    background: color:green
+    background: green
     ending: 
     events:
     - time: 3
