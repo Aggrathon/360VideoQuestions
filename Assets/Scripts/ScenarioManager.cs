@@ -8,13 +8,16 @@ public class ScenarioManager : MonoBehaviour {
 
 	public AppStateManager stateManager;
 	public ColorLayer colorLayer;
+	public UILayer uiLayer;
 	public float sceneChangeSpeed = 0.5f;
 
 	Scenario scenario;
 	Scene currentScene;
+	string scenarioFolder;
 
 	public void LoadScenario(string folder)
 	{
+		scenarioFolder = folder;
 		scenario = null;
 		try {
 			var files = Directory.GetFiles(folder);
@@ -62,19 +65,13 @@ public class ScenarioManager : MonoBehaviour {
 		}
 	}
 
-	public void LoadScenario(Scenario rs)
-	{
-		scenario = rs;
-		stateManager.EnterScenario();
-		SwitchScene((Scene)null);
-	}
-
 	void UnloadScenario()
 	{
 		scenario = null;
 		currentScene = null;
 		StopAllCoroutines();
 		stateManager.EnterMenu();
+		scenarioFolder = "";
 	}
 
 	void SwitchScene(string name)
@@ -102,6 +99,8 @@ public class ScenarioManager : MonoBehaviour {
 
 	void SwitchScene(Scene scene)
 	{
+		uiLayer.gameObject.SetActive(false);
+
 		if(scene == null)
 		{
 			currentScene = new Scene();
@@ -116,7 +115,7 @@ public class ScenarioManager : MonoBehaviour {
 			currentScene = scene;
 		}
 
-		if(currentScene.background.StartsWith("color:"))
+		if(!File.Exists(Path.Combine(scenarioFolder, currentScene.background)))
 		{
 			Color c = Color.black;
 			ColorUtility.TryParseHtmlString(currentScene.background.Substring(6), out c);
@@ -137,18 +136,23 @@ public class ScenarioManager : MonoBehaviour {
 		yield return new WaitForSeconds(currentEvent.time);
 		if(currentEvent.action != "")
 		{
-			if(currentEvent.action == "exit")
-			{
-				UnloadScenario();
-			}
-			else
-			{
-				SwitchScene(currentEvent.action);
-			}
+			HandleAction(currentEvent.action);
 		}
 		else
 		{
-			//TODO: Handle questions
+			uiLayer.ShowQuestion(currentEvent, scenarioFolder, HandleAction);
+		}
+	}
+
+	void HandleAction(string action)
+	{
+		if (action == "exit")
+		{
+			UnloadScenario();
+		}
+		else
+		{
+			SwitchScene(action);
 		}
 	}
 }

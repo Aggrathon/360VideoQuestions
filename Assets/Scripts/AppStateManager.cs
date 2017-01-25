@@ -10,23 +10,16 @@ public class AppStateManager : MonoBehaviour {
 		scenario
 	}
 
-	[SerializeField] AppState state;
 	[SerializeField] GameObject menu;
 	[SerializeField] ScenarioManager scenario;
 	[SerializeField] InformationPanel menuInfo;
-	public EditorScenario defScen;
+
+	AppState state;
+
 
 	void Start()
 	{
-		switch (state)
-		{
-			case AppState.menu:
-				EnterMenu();
-				break;
-			case AppState.scenario:
-				scenario.LoadScenario((Scenario)defScen);
-				break;
-		}
+		EnterMenu();
 	}
 
 	void Update()

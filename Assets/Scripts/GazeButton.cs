@@ -1,21 +1,21 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using System;
+using UnityEngine.Events;
 
 public class GazeButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IPointerClickHandler, IDeselectHandler, ISubmitHandler {
 
 	public float activationTime = 3f;
 	public Image progressbar;
 
-	public System.Action onActivation;
+	public UnityEvent onActivate;
 
-	private float progress = 0f;
+	private float progress = -1f;
 	private bool progressing = false;
 
 	void OnEnable()
 	{
-		progress = 0f;
+		progress = -1f;
 		progressing = false;
 	}
 
@@ -83,14 +83,7 @@ public class GazeButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
 	void Activate()
 	{
-		if(onActivation != null)
-		{
-			onActivation();
-		}
-		else
-		{
-			Debug.Log("Empty Activation");
-		}
+		onActivate.Invoke();
 		progress = 1f;
 		progressbar.fillAmount = progress;
 		progressing = false;
