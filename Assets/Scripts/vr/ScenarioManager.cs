@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Video;
 using aggrathon.vq360.data;
 
+[RequireComponent(typeof(ScenarioLogger))]
 public class ScenarioManager : MonoBehaviour {
 
 	public AppStateManager stateManager;
@@ -17,6 +18,7 @@ public class ScenarioManager : MonoBehaviour {
 	Scenario scenario;
 	Scene currentScene;
 	string scenarioFolder;
+	ScenarioLogger logger;
 
 	public void LoadScenario(string folder)
 	{
@@ -63,6 +65,9 @@ public class ScenarioManager : MonoBehaviour {
 		}
 		else
 		{
+			if (logger == null)
+				logger = GetComponent<ScenarioLogger>();
+			logger.StartLogging(scenarioFolder);
 			stateManager.EnterScenario();
 			SwitchScene((Scene)null);
 		}
@@ -118,6 +123,7 @@ public class ScenarioManager : MonoBehaviour {
 		{
 			currentScene = scene;
 		}
+		logger.SwitchScene(currentScene.name);
 
 		if (currentScene.background != "")
 		{

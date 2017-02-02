@@ -62,4 +62,10 @@ public class AppStateManager : MonoBehaviour {
 		menu.SetActive(false);
 		scenario.gameObject.SetActive(true);
 	}
+
+	private void OnApplicationFocus(bool focus)
+	{
+		EnterMenu();
+	}
+
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Text))]
@@ -34,6 +35,12 @@ public class DebugText : MonoBehaviour {
 		Debug.LogError(str);
 		if (instance != null)
 			instance.text.text += "\n\n<color=red>" + str +"</color>";
+	}
+
+	static public void LogException(string str, Exception e)
+	{
+		LogError(string.Format("{0} ({1})", str, e.GetType().ToString()));
+		Debug.LogException(e);
 	}
 
 	void OnDestroy()
