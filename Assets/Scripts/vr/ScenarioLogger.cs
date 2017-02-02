@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using UnityEngine;
@@ -13,6 +14,7 @@ public class ScenarioLogger : MonoBehaviour {
 	float sceneTime;
 	string currentScene;
 	float intervalTime;
+	Queue<string> extraInformation;
 
 	void Start()
 	{
@@ -21,10 +23,6 @@ public class ScenarioLogger : MonoBehaviour {
 
 	public void StartLogging(string folder)
 	{
-		startTime = Time.time;
-		currentScene = "unkown";
-		sceneTime = startTime;
-		intervalTime = 0f;
 		try
 		{
 			string foldername = Path.Combine(folder, "logs");
@@ -43,13 +41,24 @@ public class ScenarioLogger : MonoBehaviour {
 			}
 			DebugText.LogException("Could not create logfile", e);
 			enabled = false;
+			return;
 		}
+		startTime = Time.time;
+		currentScene = "unkown_scene";
+		sceneTime = startTime;
+		intervalTime = 0f;
+		extraInformation = new Queue<string>();
 	}
 
 	public void SwitchScene(string name)
 	{
 		currentScene = name;
 		sceneTime = Time.time;
+	}
+
+	public void LogInformation(string text)
+	{
+		extraInformation.Enqueue(text);
 	}
 	
 	void Update () {
@@ -64,6 +73,7 @@ public class ScenarioLogger : MonoBehaviour {
 			intervalTime += logInterval;
 			try
 			{
+				string extra = extraInformation.Count > 0 ? extraInformation.Dequeue() : "";
 				Vector3 rot = mainCamera.eulerAngles;
 				writer.WriteLine(string.Format("{0:F2},{1:F2},\"{2}\",{3:F2},{4:F2},{5:F2},\"{6}\"",
 					Time.time - startTime,
@@ -72,7 +82,7 @@ public class ScenarioLogger : MonoBehaviour {
 					rot.y,
 					rot.x,
 					rot.z,
-					""
+					extra
 					));
 			}
 			catch (Exception e)
@@ -93,6 +103,11 @@ public class ScenarioLogger : MonoBehaviour {
 	{
 		if(writer != null)
 		{
+			while(extraInformation.Count > 0)
+			{
+				logInterval = 0f;
+				Update();
+			}
 			try
 			{
 				writer.Close();

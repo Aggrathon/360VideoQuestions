@@ -63,9 +63,11 @@ public class AppStateManager : MonoBehaviour {
 		scenario.gameObject.SetActive(true);
 	}
 
+#if !UNITY_EDITOR
 	private void OnApplicationFocus(bool focus)
 	{
 		EnterMenu();
 	}
+#endif
 
 }

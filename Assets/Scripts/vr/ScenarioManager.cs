@@ -123,7 +123,7 @@ public class ScenarioManager : MonoBehaviour {
 		{
 			currentScene = scene;
 		}
-		logger.SwitchScene(currentScene.name);
+		StartCoroutine(Utils.RunLater(() => logger.SwitchScene(currentScene.name), new WaitForSeconds(sceneChangeSpeed * 0.5f)));
 
 		if (currentScene.background != "")
 		{
@@ -186,7 +186,9 @@ public class ScenarioManager : MonoBehaviour {
 		}
 		else
 		{
-			uiLayer.ShowQuestion(currentEvent, scenarioFolder, HandleAction);
+			currentEvent.ScrambleOptions();
+			logger.LogInformation(currentEvent.GetOptionText());
+			uiLayer.ShowQuestion(currentEvent, scenarioFolder, HandleOption);
 		}
 	}
 
@@ -200,5 +202,11 @@ public class ScenarioManager : MonoBehaviour {
 		{
 			SwitchScene(action);
 		}
+	}
+
+	void HandleOption(Option option)
+	{
+		logger.LogInformation("Selected: " + option.GetName());
+		HandleAction(option.action);
 	}
 }

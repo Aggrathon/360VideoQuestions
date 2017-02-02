@@ -29,7 +29,7 @@ public class UILayer : MonoBehaviour {
 		}
 	}
 
-	public void ShowQuestion(aggrathon.vq360.data.Event question, string folderpath, Action<string> actionCallback)
+	public void ShowQuestion(aggrathon.vq360.data.Event question, string folderpath, Action<aggrathon.vq360.data.Option> selectionCallback)
 	{
 		if(question.title != "")
 		{
@@ -42,7 +42,7 @@ public class UILayer : MonoBehaviour {
 		}
 
 		buttonHolder.localEulerAngles = new Vector3(0, -(question.options.Length - 1) * buttonAngle * 0.5f, 0);
-
+		
 		if(question.options.Length > buttonHolder.childCount)
 		{
 			DebugText.LogImportant("Too many options in question '" + question.title + "' (max " + buttonHolder.childCount + ")");
@@ -53,11 +53,11 @@ public class UILayer : MonoBehaviour {
 
 		for (int i = 0; i < question.options.Length; i++)
 		{
-			string action = question.options[i].action;
+			aggrathon.vq360.data.Option option = question.options[i];
 			buttonHolder.GetChild(i).GetComponent<VrButton>().Setup(
-				question.options[i].text,
-				question.options[i].image == "" ? "" : Path.Combine(folderpath, question.options[i].image),
-				() => actionCallback(action));
+				option.text,
+				option.image == "" ? "" : Path.Combine(folderpath, option.image),
+				() => selectionCallback(option));
 			buttonHolder.GetChild(i).gameObject.SetActive(true);
 		}
 		for (int i = question.options.Length; i < buttonHolder.childCount; i++)
