@@ -6,6 +6,8 @@ using UnityEngine.Video;
 
 public class VideoLayer : MonoBehaviour {
 
+	public bool extendedLogging = false;
+
 	VideoPlayer player;
 	Action<string> onEnding;
 	string action;
@@ -15,6 +17,20 @@ public class VideoLayer : MonoBehaviour {
 		player.loopPointReached += OnLoopPoint;
 		player.prepareCompleted += Prepared;
 		player.errorReceived += OnError;
+
+		if (extendedLogging)
+		{
+			player.frameDropped += (vp) =>
+			{
+				DebugText.Log("Video Frame Dropped");
+			};
+			player.started += (vp) =>
+			{
+				DebugText.Log("Video Started Playing");
+			};
+
+			DebugText.Log("Video Player setup");
+		}
 	}
 
 	public void SetVideo(string path, string ending, Action<string> actionHandler, float delay)
@@ -23,9 +39,12 @@ public class VideoLayer : MonoBehaviour {
 			StopAllCoroutines();
 		else
 			gameObject.SetActive(true);
-		
+
+		if (extendedLogging)
+			DebugText.Log("Video File recieved");
+
 		player.url = new Uri(path, UriKind.Absolute).AbsoluteUri;
-		player.Prepare();
+		player.Play();
 
 		if (ending == "loop")
 		{
@@ -50,6 +69,8 @@ public class VideoLayer : MonoBehaviour {
 
 	void Prepared(VideoPlayer vp)
 	{
+		if (extendedLogging)
+			DebugText.Log("Video Prepared");
 		vp.Play();
 	}
 
@@ -60,6 +81,8 @@ public class VideoLayer : MonoBehaviour {
 
 	void OnLoopPoint(VideoPlayer vp)
 	{
+		if (extendedLogging)
+			DebugText.Log("Video reached its end");
 		if (onEnding != null)
 			onEnding(action);
 	}
