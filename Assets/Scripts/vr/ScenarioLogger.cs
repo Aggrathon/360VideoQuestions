@@ -7,6 +7,7 @@ using UnityEngine;
 public class ScenarioLogger : MonoBehaviour {
 
 	public float logInterval = 0.2f;
+	public string playerprefstoggle;
 
 	StreamWriter writer;
 	Transform mainCamera;
@@ -23,6 +24,11 @@ public class ScenarioLogger : MonoBehaviour {
 
 	public void StartLogging(string folder)
 	{
+		if (PlayerPrefs.GetInt(playerprefstoggle, 1) == 0)
+		{
+			enabled = false;
+			return;
+		}
 		try
 		{
 			string foldername = Path.Combine(folder, "logs");
@@ -58,7 +64,8 @@ public class ScenarioLogger : MonoBehaviour {
 
 	public void LogInformation(string text)
 	{
-		extraInformation.Enqueue(text);
+		if(extraInformation != null)
+			extraInformation.Enqueue(text);
 	}
 	
 	void Update () {
@@ -117,6 +124,7 @@ public class ScenarioLogger : MonoBehaviour {
 				DebugText.LogException("Could not close logfile", e);
 			}
 			writer = null;
+			extraInformation = null;
 		}
 	}
 }
