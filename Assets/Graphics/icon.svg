@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="200mm"
+   height="200mm"
+   viewBox="0 0 220.00001 219.99999"
+   version="1.1"
+   id="svg8"
+   sodipodi:docname="logo.svg"
+   inkscape:version="0.92pre2 15127"
+   inkscape:export-filename="D:\Anton\Dokument\Skola\Datavetenskap\2016-2017\PsykologiVR\360VideoQuestions\Assets\Graphics\logo.png"
+   inkscape:export-xdpi="65.019997"
+   inkscape:export-ydpi="65.019997">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="423.80052"
+     inkscape:cy="363.35678"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     scale-x="1.1"
+     inkscape:pagecheckerboard="true"
+     inkscape:snap-text-baseline="true"
+     inkscape:window-width="1858"
+     inkscape:window-height="1057"
+     inkscape:window-x="1734"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-106.7)">
+    <g
+       id="g4887"
+       inkscape:transform-center-x="-0.51864168"
+       inkscape:transform-center-y="-77.326796"
+       transform="matrix(0.88571429,0,0,0.89090909,12.571429,5.4400027)"
+       style="stroke-width:1.12573576">
+      <rect
+         y="120.45"
+         x="90.75"
+         height="60.5"
+         width="38.5"
+         id="rect4468"
+         style="opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:6.19154692;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:30.23622131;stroke-opacity:1" />
+      <flowRoot
+         transform="matrix(0.534613,0,0,0.55783083,-91.980986,128.60486)"
+         style="font-style:normal;font-weight:normal;font-size:40px;line-height:25px;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.5999577px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         id="flowRoot4472"
+         xml:space="preserve"><flowRegion
+           style="text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.5999577px"
+           id="flowRegion4474"><rect
+             style="text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.5999577px"
+             y="37.795265"
+             x="302.36221"
+             height="226.77165"
+             width="151.18111"
+             id="rect4476" /></flowRegion><flowPara
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:122.5546875px;font-family:'Arial Unicode MS';-inkscape-font-specification:'Arial Unicode MS';stroke-width:0.5999577px"
+           id="flowPara4478">?</flowPara></flowRoot>    </g>
+    <use
+       x="0"
+       y="0"
+       xlink:href="#g4887"
+       inkscape:transform-center-x="-55.045036"
+       inkscape:transform-center-y="-54.311568"
+       id="use4921"
+       width="100%"
+       height="100%"
+       transform="rotate(45,109.48136,217.02679)" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#use4921"
+       inkscape:transform-center-x="-77.326795"
+       inkscape:transform-center-y="0.518639"
+       id="use4923"
+       width="100%"
+       height="100%"
+       transform="rotate(45,109.48136,217.02679)" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#use4923"
+       inkscape:transform-center-x="-54.311567"
+       inkscape:transform-center-y="55.045033"
+       id="use4925"
+       width="100%"
+       height="100%"
+       transform="rotate(45,109.48136,217.02679)" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#use4925"
+       inkscape:transform-center-x="0.51864"
+       inkscape:transform-center-y="77.326792"
+       id="use4927"
+       width="100%"
+       height="100%"
+       transform="rotate(45,109.48136,217.02679)" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#use4927"
+       inkscape:transform-center-x="55.045034"
+       inkscape:transform-center-y="54.311564"
+       id="use4929"
+       width="100%"
+       height="100%"
+       transform="rotate(45,109.48136,217.02679)" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#use4929"
+       inkscape:transform-center-x="77.326793"
+       inkscape:transform-center-y="-0.518643"
+       id="use4931"
+       width="100%"
+       height="100%"
+       transform="rotate(45,109.48136,217.02679)" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#use4931"
+       inkscape:transform-center-x="54.311565"
+       inkscape:transform-center-y="-55.045037"
+       id="use4933"
+       width="100%"
+       height="100%"
+       transform="rotate(45,109.48136,217.02679)" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#3f51b5;stroke-width:10.99999905;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 85.899807,191.90668 110,220.28427 132.33623,191.90668"
+       id="path4468"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccc" />
+    <rect
+       style="opacity:1;fill:#1a237e;fill-opacity:1;fill-rule:evenodd;stroke:#1a237e;stroke-width:9.52994061;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.99418604"
+       id="rect4814"
+       width="42.17321"
+       height="21.660097"
+       x="88.03141"
+       y="221.94487" />
+  </g>
+</svg>
