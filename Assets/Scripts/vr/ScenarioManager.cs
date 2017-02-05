@@ -179,7 +179,7 @@ public class ScenarioManager : MonoBehaviour {
 
 	IEnumerator HandleEvent(aggrathon.vq360.data.Event currentEvent)
 	{
-		yield return new WaitForSeconds(currentEvent.time);
+		yield return new WaitForSeconds(currentEvent.time+0.5f*sceneChangeSpeed);
 		if(currentEvent.action != "")
 		{
 			HandleAction(currentEvent.action);
