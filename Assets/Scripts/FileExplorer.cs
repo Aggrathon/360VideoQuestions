@@ -52,6 +52,10 @@ public class FileExplorer : MonoBehaviour {
 				{
 					return folder;
 				}
+				else
+				{
+					DebugText.LogError("Could not create folder for scenarios");
+				}
 			}
 		}
 		catch (Exception e)
@@ -67,6 +71,16 @@ public class FileExplorer : MonoBehaviour {
 		for (int i = scenarioButtonHolder.childCount - 1; i >= 0; i--)
 		{
 			Destroy(scenarioButtonHolder.GetChild(i).gameObject);
+		}
+		try
+		{
+			Directory.CreateDirectory(dataFolder);
+			Directory.GetLastAccessTime(dataFolder);
+		}
+		catch (Exception e)
+		{
+			DebugText.LogException("Cannot access scenario folder", e);
+			return;
 		}
 		string[] dirs = Directory.GetDirectories(dataFolder);
 		foreach (string dir in dirs)

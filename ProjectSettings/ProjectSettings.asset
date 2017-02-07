@@ -142,9 +142,9 @@ PlayerSettings:
     tvOS: aggrathon.vq360
   buildNumber:
     iOS: 0
-  AndroidBundleVersionCode: 3
+  AndroidBundleVersionCode: 4
   AndroidMinSdkVersion: 21
-  AndroidTargetSdkVersion: 22
+  AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1
   aotOptions: 
   stripEngineCode: 1
