@@ -76,6 +76,22 @@ public class FileExplorer : MonoBehaviour {
 		{
 			Directory.CreateDirectory(dataFolder);
 			Directory.GetLastAccessTime(dataFolder);
+			Directory.GetDirectories(dataFolder);
+		}
+		catch (UnauthorizedAccessException e)
+		{
+			PermissionRequester.RequestPermisssion((req) =>
+			{
+				if (req)
+				{
+					RefreshFolder();
+				}
+				else
+				{
+					DebugText.LogError("Cannot access scenario folder without permission");
+				}
+			});
+			return;
 		}
 		catch (Exception e)
 		{

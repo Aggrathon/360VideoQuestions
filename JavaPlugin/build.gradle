@@ -16,7 +16,6 @@ allprojects {
     repositories {
         jcenter()
     }
-    buildDir = "C:/Development/Android/tmp/${rootProject.name}/${project.name}"
 }
 
 task clean(type: Delete) {
