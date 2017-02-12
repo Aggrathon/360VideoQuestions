@@ -7,25 +7,21 @@ using UnityEngine.UI;
 using UnityEngine.VR;
 
 public class UILayer : MonoBehaviour {
-
-	public Transform buttonHolder;
-	public float buttonAngle = 40f;
-
-	void OnEnable()
-	{
-		Vector3 rot = transform.rotation.eulerAngles;
-		rot.y = InputTracking.GetLocalRotation(VRNode.Head).eulerAngles.y;
-		transform.eulerAngles = rot;
-	}
 	
-	void Update () {
+	public float buttonAngle = 40f;
+	public int options = 1;
+	
+	void Update ()
+	{
 		//Reset UI rotation
+#if UNITY_EDITOR
+		Vector3 camRot = Camera.main.transform.eulerAngles;
+#else
 		Vector3 camRot = InputTracking.GetLocalRotation(VRNode.Head).eulerAngles;
+#endif
 		if (camRot.x > 70f && camRot.x < 89.9f)
 		{
-			Vector3 rot = transform.rotation.eulerAngles;
-			rot.y = camRot.y;
-			transform.eulerAngles = rot;
+			RecalculatePositions();
 		}
 	}
 
@@ -34,37 +30,53 @@ public class UILayer : MonoBehaviour {
 		if(question.title != "")
 		{
 			transform.GetChild(0).gameObject.SetActive(true);
-			transform.GetChild(0).GetChild(1).GetComponent<Text>().text = question.title;
+			transform.GetChild(0).GetComponentInChildren<Text>().text = question.title;
 		}
 		else
 		{
 			transform.GetChild(0).gameObject.SetActive(false);
 		}
-
-		buttonHolder.localEulerAngles = new Vector3(0, -(question.options.Length - 1) * buttonAngle * 0.5f, 0);
 		
-		if(question.options.Length > buttonHolder.childCount)
+		if(question.options.Length >= transform.childCount)
 		{
-			DebugText.LogImportant("Too many options in question '" + question.title + "' (max " + buttonHolder.childCount + ")");
-			aggrathon.vq360.data.Option[] opts = new aggrathon.vq360.data.Option[buttonHolder.childCount];
-			System.Array.Copy(question.options, opts, buttonHolder.childCount);
+			DebugText.LogImportant("Too many options in question '" + question.title + "' (max " + (transform.childCount-1) + ")");
+			aggrathon.vq360.data.Option[] opts = new aggrathon.vq360.data.Option[transform.childCount-1];
+			System.Array.Copy(question.options, opts, transform.childCount-1);
 			question.options = opts;
 		}
+		options = question.options.Length;
 
 		for (int i = 0; i < question.options.Length; i++)
 		{
 			aggrathon.vq360.data.Option option = question.options[i];
-			buttonHolder.GetChild(i).GetComponent<VrButton>().Setup(
+			transform.GetChild(i+1).GetComponent<VrButton>().Setup(
 				option.text,
 				option.image == "" ? "" : Path.Combine(folderpath, option.image),
 				() => selectionCallback(option));
-			buttonHolder.GetChild(i).gameObject.SetActive(true);
+			transform.GetChild(i+1).gameObject.SetActive(true);
 		}
-		for (int i = question.options.Length; i < buttonHolder.childCount; i++)
+		for (int i = question.options.Length+1; i < transform.childCount; i++)
 		{
-			buttonHolder.GetChild(i).gameObject.SetActive(false);
+			transform.GetChild(i).gameObject.SetActive(false);
 		}
 
+		RecalculatePositions();
 		gameObject.SetActive(true);
+	}
+
+	public void RecalculatePositions()
+	{
+#if UNITY_EDITOR
+		Vector3 camRot = Camera.main.transform.eulerAngles;
+#else
+		Vector3 camRot = InputTracking.GetLocalRotation(VRNode.Head).eulerAngles;
+#endif
+		float rotation = camRot.y;
+		float offset = -(options-1) * buttonAngle *0.5f;
+		transform.GetChild(0).eulerAngles = new Vector3(0, rotation, 0);
+		for (int i = 1; i < transform.childCount; i++)
+		{
+			transform.GetChild(i).eulerAngles = new Vector3(0, rotation + offset + buttonAngle * (i-1), 0);
+		}
 	}
 }

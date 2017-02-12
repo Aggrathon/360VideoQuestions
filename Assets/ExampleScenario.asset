@@ -16,7 +16,7 @@ MonoBehaviour:
     background: red
     ending: 
     events:
-    - time: 3
+    - time: 2
       action: color2
       title: 
       options: []
@@ -24,7 +24,7 @@ MonoBehaviour:
     background: green
     ending: 
     events:
-    - time: 3
+    - time: 2
       action: restart
       title: 
       options: []

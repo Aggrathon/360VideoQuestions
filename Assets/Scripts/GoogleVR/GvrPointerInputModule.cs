@@ -150,10 +150,10 @@ public class GvrPointerInputModule : BaseInputModule {
     // True if the trigger is held down.
     bool triggering = Input.GetMouseButton(0);
 
-    #if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
+    //#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
     //triggerDown |= GvrController.ClickButtonDown;
     //triggering |= GvrController.ClickButton;
-    #endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
+    //#endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
 
     bool handlePendingClickRequired = !triggering;
 
@@ -374,11 +374,11 @@ public class GvrPointerInputModule : BaseInputModule {
     bool touchDown = false;
     bool touching = false;
     Vector2 currentScroll = Vector2.zero;
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
+//#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
 //    touchDown |= GvrController.TouchDown;
 //    touching |= GvrController.IsTouching;
 //    currentScroll = GvrController.TouchPos;
-#endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
+//#endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
 
     if (touchDown && !eligibleForScroll) {
       lastScroll = currentScroll;
