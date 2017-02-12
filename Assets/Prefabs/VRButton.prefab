@@ -128,8 +128,8 @@ GameObject:
   - component: {fileID: 224839768109129326}
   - component: {fileID: 223404064994240734}
   - component: {fileID: 114714964550901552}
-  - component: {fileID: 114178349079042082}
   - component: {fileID: 114175483543475982}
+  - component: {fileID: 114178349079042082}
   - component: {fileID: 114868268986082722}
   - component: {fileID: 114073277832726624}
   m_Layer: 5
@@ -187,18 +187,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   raycastMode: 0
-  ignoreReversedGraphics: 0
+  ignoreReversedGraphics: 1
   blockingObjects: 0
   blockingMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
 --- !u!114 &114178349079042082
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1897693574445126}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
@@ -207,7 +207,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
 --- !u!114 &114195041573440696
 MonoBehaviour:
   m_ObjectHideFlags: 1
