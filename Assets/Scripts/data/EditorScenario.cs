@@ -14,6 +14,7 @@ namespace aggrathon.vq360.data
 			public Texture2D image;
 		}
 
+		public string[] start;
 		public Scene[] scenes;
 		public Image[] images;
 		[TextArea(3, 15)]
@@ -23,6 +24,7 @@ namespace aggrathon.vq360.data
 		{
 			Scenario rs = new Scenario();
 			rs.scenes = s.scenes;
+			rs.start = s.start;
 			return rs;
 		}
 

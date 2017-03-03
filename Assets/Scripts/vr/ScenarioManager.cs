@@ -19,6 +19,7 @@ public class ScenarioManager : MonoBehaviour {
 	Scene currentScene;
 	string scenarioFolder;
 	ScenarioLogger logger;
+	int startScene = 0;
 
 	public void LoadScenario(string folder)
 	{
@@ -67,6 +68,8 @@ public class ScenarioManager : MonoBehaviour {
 		{
 			if (logger == null)
 				logger = GetComponent<ScenarioLogger>();
+			scenario.InitScenes();
+			startScene = 0;
 			logger.StartLogging(scenarioFolder);
 			stateManager.EnterScenario();
 			SwitchScene((Scene)null);
@@ -117,7 +120,7 @@ public class ScenarioManager : MonoBehaviour {
 			currentScene.events = new aggrathon.vq360.data.Event[1];
 			currentScene.events[0] = new aggrathon.vq360.data.Event();
 			currentScene.events[0].time = 5f;
-			currentScene.events[0].action = scenario.scenes[0].name;
+			currentScene.events[0].action = "exit";
 		}
 		else
 		{
@@ -196,7 +199,16 @@ public class ScenarioManager : MonoBehaviour {
 	{
 		if (action == "exit")
 		{
-			UnloadScenario();
+			if (startScene < scenario.start.Length)
+			{
+				action = scenario.start[startScene];
+				startScene++;
+				HandleAction(action);
+			}
+			else
+			{
+				UnloadScenario();
+			}
 		}
 		else
 		{

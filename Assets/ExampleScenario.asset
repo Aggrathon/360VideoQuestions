@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c34f708b8ae5f924bb9271d7ad2d8f9f, type: 3}
   m_Name: ExampleScenario
   m_EditorClassIdentifier: Assembly-CSharp::EditorScenario
+  start: []
   scenes:
   - name: color1
     background: red

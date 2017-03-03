@@ -44,7 +44,7 @@ public class VideoLayer : MonoBehaviour {
 			DebugText.Log("Video File recieved");
 
 		player.url = new Uri(path, UriKind.Absolute).AbsoluteUri;
-		player.Play();
+		player.Prepare();
 
 		if (ending == "loop")
 		{
