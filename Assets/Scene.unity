@@ -1388,7 +1388,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab1afe12c063aff4ea314fd930b59d3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showOnlyImportant: 0
+  showOnlyImportant: 1
 --- !u!114 &760446007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3057,7 +3057,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6464693ecfee7804f96d797222da0bae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  extendedLogging: 1
+  extendedLogging: 0
 --- !u!1 &1571395623
 GameObject:
   m_ObjectHideFlags: 0
