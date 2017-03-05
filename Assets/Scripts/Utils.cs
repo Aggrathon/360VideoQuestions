@@ -61,4 +61,10 @@ public static class Utils {
 		yield return delay;
 		action();
 	}
+
+	public static IEnumerator RunLater(Action action, float delay)
+	{
+		yield return new WaitForSeconds(delay);
+		action();
+	}
 }

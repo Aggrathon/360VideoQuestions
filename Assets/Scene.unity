@@ -425,8 +425,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 302143305}
   m_HandleRect: {fileID: 302143304}
   m_Direction: 2
-  m_Value: 0.9999968
-  m_Size: 0
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1194,11 +1194,6 @@ Prefab:
       propertyPath: m_Name
       value: Button (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 223404064994240734, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 2083524465}
     - target: {fileID: 224704706128131028, guid: 7b5ba8303a705544c9a6b95289ec8154,
         type: 2}
       propertyPath: m_AnchorMin.y
@@ -1264,6 +1259,11 @@ Prefab:
       propertyPath: m_SizeDelta.y
       value: 333
       objectReference: {fileID: 0}
+    - target: {fileID: 223404064994240734, guid: 7b5ba8303a705544c9a6b95289ec8154,
+        type: 2}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 2083524465}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7b5ba8303a705544c9a6b95289ec8154, type: 2}
   m_IsPrefabParent: 0

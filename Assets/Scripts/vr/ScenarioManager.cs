@@ -126,7 +126,6 @@ public class ScenarioManager : MonoBehaviour {
 		{
 			currentScene = scene;
 		}
-		StartCoroutine(Utils.RunLater(() => logger.SwitchScene(currentScene.name), new WaitForSeconds(sceneChangeSpeed * 0.5f)));
 
 		if (currentScene.background != "")
 		{
@@ -138,8 +137,12 @@ public class ScenarioManager : MonoBehaviour {
 
 				if (videoLayer.gameObject.activeSelf)
 					videoLayer.Hide(sceneChangeSpeed);
-				if (photoLayer.gameObject.activeSelf)
-					StartCoroutine(Utils.RunLater(() => photoLayer.gameObject.SetActive(false), new WaitForSeconds(sceneChangeSpeed)));
+
+				StartCoroutine(Utils.RunLater(() => {
+					if (photoLayer.gameObject.activeSelf)
+						photoLayer.gameObject.SetActive(false);
+					logger.SwitchScene(currentScene.name);
+				}, sceneChangeSpeed * 0.5f));
 			}
 			else
 			{
@@ -149,40 +152,53 @@ public class ScenarioManager : MonoBehaviour {
 					photoLayer.material.mainTexture = Utils.LoadImage(Path.Combine(scenarioFolder, currentScene.background));
 
 					colorLayer.Flash(sceneChangeSpeed);
-					if (!photoLayer.gameObject.activeSelf)
-						StartCoroutine(Utils.RunLater(() => photoLayer.gameObject.SetActive(true), new WaitForSeconds(sceneChangeSpeed*0.5f)));
+					StartCoroutine(Utils.RunLater(() => {
+						if (!photoLayer.gameObject.activeSelf)
+							photoLayer.gameObject.SetActive(true);
+						logger.SwitchScene(currentScene.name);
+					}, sceneChangeSpeed * 0.5f));
 					if (videoLayer.gameObject.activeSelf)
 						videoLayer.Hide(sceneChangeSpeed*0.5f);
 				}
 				else if (ext == ".mp4")
 				{
-					videoLayer.SetVideo(Path.Combine(scenarioFolder, currentScene.background), currentScene.ending, HandleAction, sceneChangeSpeed*0.5f);
+					colorLayer.TurnOn(sceneChangeSpeed*0.5f);
+					videoLayer.SetVideo(Path.Combine(scenarioFolder, currentScene.background), currentScene.ending, HandleAction, sceneChangeSpeed*0.5f, ()=> {
+						colorLayer.TurnOff(sceneChangeSpeed * 0.5f);
+						logger.SwitchScene(currentScene.name);
 
-					colorLayer.Flash(sceneChangeSpeed);
+						for (int i = 0; i < currentScene.events.Length; i++)
+						{
+							StartCoroutine(HandleEvent(currentScene.events[i], 0));
+						}
+					});
+
 					if (photoLayer.gameObject.activeSelf)
-						StartCoroutine(Utils.RunLater(() => photoLayer.gameObject.SetActive(false), new WaitForSeconds(sceneChangeSpeed*0.5f)));
+						StartCoroutine(Utils.RunLater(() => photoLayer.gameObject.SetActive(false), sceneChangeSpeed*0.5f));
 				}
 				else
 				{
 					DebugText.LogImportant("Unsupported background file format in scene '" + currentScene.name + "'");
+					StartCoroutine(Utils.RunLater(() => logger.SwitchScene(currentScene.name), sceneChangeSpeed * 0.5f));
 					videoLayer.ClearAction();
 				}
 			}
 		}
 		else
 		{
+			StartCoroutine(Utils.RunLater(() => logger.SwitchScene(currentScene.name), sceneChangeSpeed * 0.5f));
 			videoLayer.ClearAction();
 		}
 
 		for (int i = 0; i < currentScene.events.Length; i++)
 		{
-			StartCoroutine(HandleEvent(currentScene.events[i]));
+			StartCoroutine(HandleEvent(currentScene.events[i], 0.5f * sceneChangeSpeed));
 		}
 	}
 
-	IEnumerator HandleEvent(aggrathon.vq360.data.Event currentEvent)
+	IEnumerator HandleEvent(aggrathon.vq360.data.Event currentEvent, float delay)
 	{
-		yield return new WaitForSeconds(currentEvent.time+0.5f*sceneChangeSpeed);
+		yield return new WaitForSeconds(currentEvent.time+delay);
 		if(currentEvent.action != "")
 		{
 			HandleAction(currentEvent.action);

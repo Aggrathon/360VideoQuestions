@@ -10,7 +10,9 @@ public class VideoLayer : MonoBehaviour {
 
 	VideoPlayer player;
 	Action<string> onEnding;
+	Action onLoaded;
 	string action;
+	float timeToStart;
 	
 	void Awake () {
 		player = GetComponent<VideoPlayer>();
@@ -33,18 +35,19 @@ public class VideoLayer : MonoBehaviour {
 		}
 	}
 
-	public void SetVideo(string path, string ending, Action<string> actionHandler, float delay)
+	public void SetVideo(string path, string ending, Action<string> actionHandler, float delay, Action onLoaded)
 	{
 		if (gameObject.activeSelf)
 			StopAllCoroutines();
-		else
-			gameObject.SetActive(true);
 
 		if (extendedLogging)
 			DebugText.Log("Video File recieved");
 
 		player.url = new Uri(path, UriKind.Absolute).AbsoluteUri;
 		player.Prepare();
+		
+		this.onLoaded = onLoaded;
+		this.timeToStart = Time.time + delay;
 
 		if (ending == "loop")
 		{
@@ -69,9 +72,21 @@ public class VideoLayer : MonoBehaviour {
 
 	void Prepared(VideoPlayer vp)
 	{
+		gameObject.SetActive(true);
 		if (extendedLogging)
 			DebugText.Log("Video Prepared");
-		vp.Play();
+		if (Time.time > this.timeToStart)
+		{
+			if (onLoaded != null) onLoaded();
+			vp.Play();
+		}
+		else
+		{
+			StartCoroutine(Utils.RunLater(() => {
+				if (onLoaded != null) onLoaded();
+				vp.Play();
+			}, timeToStart - Time.time));
+		}
 	}
 
 	void OnError(VideoPlayer cp, string e)

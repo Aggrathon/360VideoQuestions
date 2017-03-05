@@ -34,17 +34,20 @@ public class GazeButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
 	public void OnPointerEnter(PointerEventData eventData)
 	{
+		DebugText.LogError("enter_"+eventData.currentInputModule.GetType().ToString());
 		EventSystem.current.SetSelectedGameObject(gameObject);
 		progressing = true;
 	}
 
 	public void OnPointerExit(PointerEventData eventData)
 	{
+		DebugText.LogError("exit_" + eventData.currentInputModule.GetType().ToString());
 		progressing = false;
 	}
 
 	public void OnSelect(BaseEventData eventData)
 	{
+		DebugText.LogError("select_" + eventData.currentInputModule.GetType().ToString());
 		progressing = true;
 	}
 
