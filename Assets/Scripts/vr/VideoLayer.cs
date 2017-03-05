@@ -6,8 +6,6 @@ using UnityEngine.Video;
 
 public class VideoLayer : MonoBehaviour {
 
-	public bool extendedLogging = false;
-
 	VideoPlayer player;
 	Action<string> onEnding;
 	Action onLoaded;
@@ -19,32 +17,19 @@ public class VideoLayer : MonoBehaviour {
 		player.loopPointReached += OnLoopPoint;
 		player.prepareCompleted += Prepared;
 		player.errorReceived += OnError;
-
-		if (extendedLogging)
-		{
-			player.frameDropped += (vp) =>
-			{
-				DebugText.Log("Video Frame Dropped");
-			};
-			player.started += (vp) =>
-			{
-				DebugText.Log("Video Started Playing");
-			};
-
-			DebugText.Log("Video Player setup");
-		}
+		player.frameDropped += OnDropped;
+		player.started += OnStarted;
 	}
 
 	public void SetVideo(string path, string ending, Action<string> actionHandler, float delay, Action onLoaded)
 	{
 		if (gameObject.activeSelf)
 			StopAllCoroutines();
+		gameObject.SetActive(true);
 
-		if (extendedLogging)
-			DebugText.Log("Video File recieved");
-
+		DebugText.Log("Loading Video File");
 		player.url = new Uri(path, UriKind.Absolute).AbsoluteUri;
-		player.Prepare();
+		player.Play();
 		
 		this.onLoaded = onLoaded;
 		this.timeToStart = Time.time + delay;
@@ -72,9 +57,7 @@ public class VideoLayer : MonoBehaviour {
 
 	void Prepared(VideoPlayer vp)
 	{
-		gameObject.SetActive(true);
-		if (extendedLogging)
-			DebugText.Log("Video Prepared");
+		DebugText.Log("Video Loaded");
 		if (Time.time > this.timeToStart)
 		{
 			if (onLoaded != null) onLoaded();
@@ -82,6 +65,8 @@ public class VideoLayer : MonoBehaviour {
 		}
 		else
 		{
+			vp.Pause();
+			vp.time = 0;
 			StartCoroutine(Utils.RunLater(() => {
 				if (onLoaded != null) onLoaded();
 				vp.Play();
@@ -96,10 +81,17 @@ public class VideoLayer : MonoBehaviour {
 
 	void OnLoopPoint(VideoPlayer vp)
 	{
-		if (extendedLogging)
-			DebugText.Log("Video reached its end");
+		DebugText.Log("Video reached its end");
 		if (onEnding != null)
 			onEnding(action);
+	}
+
+	void OnStarted(VideoPlayer vp) {
+		DebugText.Log("Video Started Playing");
+	}
+
+	void OnDropped(VideoPlayer vp) {
+		DebugText.Log("Video Frame Dropped");
 	}
 
 	void OnDisable()

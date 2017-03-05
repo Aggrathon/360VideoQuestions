@@ -17,6 +17,8 @@ public class GazeButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 	{
 		progress = -1f;
 		progressing = false;
+		progressbar.fillAmount = 0;
+		progressbar.type = Image.Type.Filled;
 	}
 
 	public void OnDeselect(BaseEventData eventData)
@@ -34,20 +36,17 @@ public class GazeButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
 	public void OnPointerEnter(PointerEventData eventData)
 	{
-		DebugText.LogError("enter_"+eventData.currentInputModule.GetType().ToString());
 		EventSystem.current.SetSelectedGameObject(gameObject);
 		progressing = true;
 	}
 
 	public void OnPointerExit(PointerEventData eventData)
 	{
-		DebugText.LogError("exit_" + eventData.currentInputModule.GetType().ToString());
 		progressing = false;
 	}
 
 	public void OnSelect(BaseEventData eventData)
 	{
-		DebugText.LogError("select_" + eventData.currentInputModule.GetType().ToString());
 		progressing = true;
 	}
 
@@ -67,10 +66,8 @@ public class GazeButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 			if(progress > 1f)
 			{
 				Activate();
-			}
-			else
-			{
-				progressbar.fillAmount = progress;
+				progress = 1;
+				progressing = false;
 			}
 		}
 		else if(progress != 0f)
@@ -80,12 +77,13 @@ public class GazeButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 			{
 				progress = 0f;
 			}
-			progressbar.fillAmount = progress;
 		}
+		progressbar.fillAmount = progress;
 	}
 
 	void Activate()
 	{
+		DebugText.LogError("Click");
 		onActivate.Invoke();
 		progress = 1f;
 		progressbar.fillAmount = progress;

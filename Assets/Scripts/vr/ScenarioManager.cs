@@ -112,6 +112,7 @@ public class ScenarioManager : MonoBehaviour {
 	{
 		uiLayer.gameObject.SetActive(false);
 		StopAllCoroutines();
+		bool video = false;
 
 		if (scene == null)
 		{
@@ -173,6 +174,7 @@ public class ScenarioManager : MonoBehaviour {
 						}
 					});
 
+					video = true;
 					if (photoLayer.gameObject.activeSelf)
 						StartCoroutine(Utils.RunLater(() => photoLayer.gameObject.SetActive(false), sceneChangeSpeed*0.5f));
 				}
@@ -190,7 +192,7 @@ public class ScenarioManager : MonoBehaviour {
 			videoLayer.ClearAction();
 		}
 
-		for (int i = 0; i < currentScene.events.Length; i++)
+		if(!video) for (int i = 0; i < currentScene.events.Length; i++)
 		{
 			StartCoroutine(HandleEvent(currentScene.events[i], 0.5f * sceneChangeSpeed));
 		}

@@ -711,7 +711,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23cfc232dafb07749a31e91e35b5f837, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  logInterval: 0.2
+  logInterval: 0.5
   playerprefstoggle: log_user_interactions
 --- !u!1 &402469863
 GameObject:
@@ -1259,11 +1259,6 @@ Prefab:
       propertyPath: m_SizeDelta.y
       value: 333
       objectReference: {fileID: 0}
-    - target: {fileID: 223404064994240734, guid: 7b5ba8303a705544c9a6b95289ec8154,
-        type: 2}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 2083524465}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7b5ba8303a705544c9a6b95289ec8154, type: 2}
   m_IsPrefabParent: 0
@@ -1388,7 +1383,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab1afe12c063aff4ea314fd930b59d3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showOnlyImportant: 1
+  showOnlyImportant: 0
+  logLength: 10
 --- !u!114 &760446007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1421,7 +1417,58 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: '<color=#CCC>Line 1
+
+
+    Line 2
+
+
+    Line 3
+
+
+    Line 4
+
+
+    Line 5
+
+
+    Line 6
+
+
+    Line 7
+
+
+    Line 8
+
+
+    Line 9
+
+
+    Line 10
+
+
+    Line 11
+
+
+    Line 12
+
+
+    Line 13
+
+
+    Line 14
+
+
+    Line 15
+
+
+    Line 16
+
+
+    Line 17
+
+
+    Line 18</color>'
 --- !u!222 &760446008
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3057,7 +3104,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6464693ecfee7804f96d797222da0bae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  extendedLogging: 0
 --- !u!1 &1571395623
 GameObject:
   m_ObjectHideFlags: 0

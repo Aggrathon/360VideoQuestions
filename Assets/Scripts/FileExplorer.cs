@@ -68,6 +68,11 @@ public class FileExplorer : MonoBehaviour {
 
 	public void RefreshFolder()
 	{
+		if(dataFolder == null || dataFolder == "")
+		{
+			Debug.LogError("Folder path for scenarios not found");
+			return;
+		}
 		for (int i = scenarioButtonHolder.childCount - 1; i >= 0; i--)
 		{
 			Destroy(scenarioButtonHolder.GetChild(i).gameObject);
