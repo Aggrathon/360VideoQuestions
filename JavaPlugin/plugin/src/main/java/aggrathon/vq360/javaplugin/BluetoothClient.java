@@ -7,19 +7,48 @@ import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Set;
 
 public class BluetoothClient {
 
 	public static final String TAG = "vq360_BLUETOOTH_CLIENT";
 
+	BluetoothAdapter mBluetoothAdapter;
 	BluetoothDevice mDevice;
 	BluetoothSocket mSocket;
 	InputStream mInStream;
 	byte[] mBuffer;
 
-	public BluetoothClient(BluetoothDevice device) {
-		mDevice = device;
+	public BluetoothClient() {
+		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		mBuffer = new byte[1024];
+	}
+
+	public String GetDevices() {
+		StringBuilder sb = new StringBuilder();
+		for (BluetoothDevice d : mBluetoothAdapter.getBondedDevices()) {
+			sb.append(d.getName().replace(',', '.'));
+			sb.append(',');
+		}
+		if(sb.length() > 0) {
+			return sb.substring(0, sb.length()-1);
+		}
+		else {
+			return "";
+		}
+	}
+
+	public void Connect(String device) {
+		for (BluetoothDevice d : mBluetoothAdapter.getBondedDevices()) {
+			if(d.getName().replace(',','.').equals(device)) {
+				Connect(d);
+				return;
+			}
+		}
+	}
+
+	public void Connect(BluetoothDevice device) {
+		Close();
 		try {
 			mSocket = device.createRfcommSocketToServiceRecord(Bluetooth.UUID);
 			try {
