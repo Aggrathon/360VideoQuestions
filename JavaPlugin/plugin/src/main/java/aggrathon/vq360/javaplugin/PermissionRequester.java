@@ -42,11 +42,11 @@ public class PermissionRequester extends UnityFragment {
 			else {
 				Callback("false");
 			}
+			CleanUp();
 		}
 		else {
 			super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 		}
-		CleanUp();
 	}
 
 }
