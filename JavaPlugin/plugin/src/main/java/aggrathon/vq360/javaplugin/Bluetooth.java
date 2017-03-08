@@ -23,6 +23,12 @@ public class Bluetooth extends UnityFragment {
 		CallFragment(bt, activity, unityObject, unityMethod);
 	}
 
+	public static void OpenSettings(Activity activity) {
+		Intent intentOpenBluetoothSettings = new Intent();
+		intentOpenBluetoothSettings.setAction(android.provider.Settings.ACTION_BLUETOOTH_SETTINGS);
+		activity.startActivity(intentOpenBluetoothSettings);
+	}
+
 
 	private boolean setDiscoverable;
 
