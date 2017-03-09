@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InformationPanel : MonoBehaviour {
+public class PopupPanel : MonoBehaviour {
 
 	void Start () {
 		gameObject.SetActive(false);

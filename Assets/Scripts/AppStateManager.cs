@@ -12,7 +12,7 @@ public class AppStateManager : MonoBehaviour {
 
 	[SerializeField] GameObject menu;
 	[SerializeField] ScenarioManager scenario;
-	[SerializeField] InformationPanel menuInfo;
+	[SerializeField] PopupPanel menuInfo;
 
 	AppState state;
 
