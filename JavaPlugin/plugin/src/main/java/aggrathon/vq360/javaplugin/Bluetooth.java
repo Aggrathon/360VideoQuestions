@@ -1,6 +1,5 @@
 package aggrathon.vq360.javaplugin;
 
-
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothServerSocket;
@@ -10,6 +9,7 @@ import android.util.Log;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Bluetooth {
 
@@ -19,48 +19,65 @@ public class Bluetooth {
 
 	BluetoothAdapter mBluetoothAdapter;
 	private BluetoothServerSocket mServerSocket;
+
 	private BluetoothSocket mSocket;
 	private InputStream mInStream;
 	private OutputStream mOutStream;
 	private byte[] mBuffer;
 
+	private Thread mThread;
+	private ConcurrentLinkedQueue<String> mQueue;
+
 
 	public Bluetooth() {
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+		mQueue = new ConcurrentLinkedQueue<String>();
 	}
 
 
 	/**
-	 * Wait for another device to connect
-	 * This is a blocking call (should be called from a thread)
+	 * Wait for another device to connect (async)
+	 * Call GetMessage() to know if a connection has been established
 	 * @return
 	 */
-	public boolean ConnectServer() {
+	public void ConnectServer() {
 		Close();
-		if(!mBluetoothAdapter.isEnabled())
-			return false;
+		if(!mBluetoothAdapter.isEnabled()) {
+			mQueue.add("Bluetooth needed");
+			return;
+		}
 		try {
-			mServerSocket = mBluetoothAdapter.listenUsingInsecureRfcommWithServiceRecord(TAG, UUID);
+			mServerSocket = mBluetoothAdapter.listenUsingRfcommWithServiceRecord(TAG, UUID);
 		} catch (IOException e) {
 			Log.e(TAG, "Socket's listen() method failed", e);
 		}
-		if (mServerSocket == null)
-			return false;
-		try {
-			if (SetSocket(mServerSocket.accept())) {
-				try {
-					mServerSocket.close();
-				} catch (IOException e) {
-					Log.e(TAG, "Could not close the server socket", e);
-				}
-				mServerSocket = null;
-				return true;
-			}
-		} catch (IOException e) {
-			Log.e(TAG, "Socket's accept() method failed", e);
+		if (mServerSocket == null) {
+			mQueue.add("Bluetooth socket failed");
+			return;
 		}
-		Close();
-		return false;
+		mThread = new Thread() {
+			@Override
+			public void run() {
+				try {
+					if (mServerSocket != null && SetSocket(mServerSocket.accept())) {
+						try {
+							mServerSocket.close();
+						} catch (IOException e) {
+							Log.e(TAG, "Could not close the server socket", e);
+						}
+						mServerSocket = null;
+						mQueue.add("connected");
+					}
+					else {
+						mQueue.add("Could not connect");
+					}
+				} catch (IOException e) {
+					Log.e(TAG, "Socket's accept() method failed", e);
+					mQueue.add("Bluetooth connection failed");
+				}
+			}
+		};
+		mThread.start();
 	}
 
 
@@ -117,6 +134,33 @@ public class Bluetooth {
 
 
 	/**
+	 * Try get a received message
+	 * If waiting for a connection then "connected" or an error
+	 *  will be the first message after a connection attempt
+	 * @return message or null if none
+	 */
+	public String GetMessage() {
+		return mQueue.poll();
+	}
+
+
+	/**
+	 * Send a message to the connected device
+	 * The devices should be connected before using this
+	 * @param data the message to send
+	 */
+	public void Send(String data) {
+		if(mOutStream != null) {
+			try {
+				mOutStream.write(data.getBytes());
+			} catch (IOException e) {
+				Log.e(TAG, "Error occurred when sending data", e);
+			}
+		}
+	}
+
+
+	/**
 	 * Sets the communication socket and opens io-streams
 	 * @param socket
 	 * @return operation successful
@@ -149,45 +193,34 @@ public class Bluetooth {
 		if(mBuffer == null) {
 			mBuffer = new byte[1024];
 		}
+		StartListenerThread();
 		return true;
 	}
 
 
 	/**
-	 * Get Message from the connected device
-	 * This is a blocking call (should be called from a thread)
-	 * The devices should be connected before using this
-	 * @return the message or empty on fail
+	 * Starts a thread listening for incoming messages
+	 * The devices must be connected first
 	 */
-	public String Listen() {
-		if (mInStream != null) {
-			int numBytes;
-
-			try {
-				numBytes = mInStream.read(mBuffer);
-				return new String(mBuffer, 0, numBytes);
-			} catch (IOException e) {
-				Log.d(TAG, "Input stream was disconnected", e);
-				return "";
+	private void StartListenerThread() {
+		mThread = new Thread() {
+			@Override
+			public void run() {
+				while (true) {
+					if (mInStream != null) {
+						int numBytes;
+						try {
+							numBytes = mInStream.read(mBuffer);
+							mQueue.add(new String(mBuffer, 0, numBytes));
+						} catch (IOException e) {
+							Log.d(TAG, "Input stream was disconnected", e);
+							return;
+						}
+					}
+				}
 			}
-		}
-		return "";
-	}
-
-
-	/**
-	 * Send a message to the connected device
-	 * The devices should be connected before using this
-	 * @param data the message to send
-	 */
-	public void Send(String data) {
-		if(mOutStream != null) {
-			try {
-				mOutStream.write(data.getBytes());
-			} catch (IOException e) {
-				Log.e(TAG, "Error occurred when sending data", e);
-			}
-		}
+		};
+		mThread.start();
 	}
 
 
@@ -195,22 +228,26 @@ public class Bluetooth {
 	 * Close all connections between the devices
 	 */
 	public void Close() {
-		if (mServerSocket != null) {
-			try {
+		try {
+			if (mServerSocket != null) {
 				mServerSocket.close();
 				mServerSocket = null;
-			} catch (IOException e) {
-				Log.e(TAG, "Could not close the server socket", e);
 			}
+		} catch(IOException e){
+			Log.e(TAG, "Could not close the server socket", e);
 		}
-		if (mSocket != null) {
-			try {
+		try {
+			if (mSocket != null) {
 				mSocket.close();
 				mSocket = null;
-			} catch (IOException e) {
-				Log.e(TAG, "Could not close the communication socket", e);
 			}
+		} catch (IOException e) {
+			Log.e(TAG, "Could not close the communication socket", e);
 		}
+		if(mThread != null && mThread.isAlive()) {
+			mThread.interrupt();
+		}
+		mQueue.clear();
 		mInStream = null;
 		mOutStream = null;
 	}

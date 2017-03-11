@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 
+
 public class BluetoothSettings extends UnityFragment {
 
 	private static final int REQUEST_BLUETOOTH_ON = 226;
@@ -36,7 +37,7 @@ public class BluetoothSettings extends UnityFragment {
 		super.onStart();
 		BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		if (mBluetoothAdapter == null) {
-			Callback("Device does not support BluetoothSettings");
+			Callback("Device does not support Bluetooth");
 			CleanUp();
 		}
 		else {

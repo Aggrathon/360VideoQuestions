@@ -5,42 +5,65 @@ using UnityEngine;
 
 public class ObserverManager : MonoBehaviour {
 
-    Queue<string> messageQueue;
-	private readonly object syncLock = new object();
+	public enum State
+	{
+		idle,
+		btserver,
+		broadcaster,
+		observer
+	}
+	
 	AndroidJavaObject bluetooth;
-    Thread listenerThread;
 	Action bluetoothEnabledCallback;
 	Action<bool> bluetoothConnectedCallback;
+	State state = State.idle;
 
 	public FadingText text;
 	
 
 	void Start () {
-        messageQueue = new Queue<string>();
-	}
-
-	private void OnDestroy()
-	{
-		if (bluetooth != null)
-		{
-			bluetooth.Call("Close");
-			bluetooth = null;
-		}
-		if (listenerThread != null)
-		{
-			listenerThread.Abort();
-			listenerThread = null;
-		}
 	}
 
 	private void Update()
 	{
-		lock (syncLock)
+		switch (state)
 		{
-			if (messageQueue.Count > 0)
-			{
-				text.Show(messageQueue.Dequeue());
-			}
+			case State.btserver:
+				if (bluetooth == null)
+				{
+					Disconnect();
+				}
+				else
+				{
+					string message = bluetooth.Call<string>("GetMessage");
+					if(!string.IsNullOrEmpty(message))
+					{
+						if(message == "connected")
+						{
+							//TODO: Set up Broadcast
+							Send("Test Message");
+							if (bluetoothConnectedCallback != null) bluetoothConnectedCallback(true);
+						}
+						else
+						{
+							DebugText.LogImportant(message);
+							if (bluetoothConnectedCallback != null) bluetoothConnectedCallback(false);
+							Disconnect();
+						}
+					}
+				}
+				break;
+
+			case State.broadcaster:
+				break;
+
+			case State.observer:
+				string msg = bluetooth.Call<string>("GetMessage");
+				if (!string.IsNullOrEmpty(msg))
+				{
+					text.Show(msg);
+				}
+				break;
 		}
 	}
 
@@ -97,9 +120,11 @@ public class ObserverManager : MonoBehaviour {
 	public void WaitForConnection(Action<bool> onResult)
     {
 		bluetoothConnectedCallback = onResult;
-		listenerThread = new Thread(Server);
-		listenerThread.Start();
-    }
+		state = State.btserver;
+		if(bluetooth == null)
+			bluetooth = new AndroidJavaObject("aggrathon.vq360.javaplugin.Bluetooth");
+		bluetooth.Call("ConnectServer");
+	}
 
     public string[] GetDevices()
     {
@@ -114,8 +139,7 @@ public class ObserverManager : MonoBehaviour {
 		if (bluetooth.Call<bool>("ConnectClient", device))
 		{
 			//TODO Set Observer Mode
-			listenerThread = new Thread(Listen);
-			listenerThread.Start();
+			state = State.observer;
 		}
 		else
 		{
@@ -124,46 +148,20 @@ public class ObserverManager : MonoBehaviour {
 		}
 	}
 
+	private void OnDestroy()
+	{
+		if (bluetooth != null)
+		{
+			bluetooth.Call("Close");
+			bluetooth = null;
+		}
+	}
+
 	public void Disconnect()
 	{
 		OnDestroy();
-		lock (syncLock)
-		{
-			messageQueue.Clear();
-		}
-		//TODO Unload Observer
-	}
-
-	#endregion
-
-
-	#region Threads
-
-	private void Listen()
-    {
-        while(bluetooth != null)
-        {
-			string str = bluetooth.Call<string>("Listen");
-			lock (syncLock)
-			{
-				messageQueue.Enqueue(str);
-			}
-        }
-    }
-
-	private void Server()
-	{
-		if (bluetooth.Call<bool>("ConnectServer"))
-		{
-			//TODO Start broadcasting
-			if (bluetoothConnectedCallback != null) bluetoothConnectedCallback(true);
-			Send("Test Message");
-		}
-		else
-		{
-			Disconnect();
-			if (bluetoothConnectedCallback != null) bluetoothConnectedCallback(false);
-		}
+		//TODO: Unload Observer
+		state = State.idle;
 	}
 
 	#endregion
