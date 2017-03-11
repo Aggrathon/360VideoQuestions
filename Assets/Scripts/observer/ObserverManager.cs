@@ -8,8 +8,10 @@ public class ObserverManager : MonoBehaviour {
     ConcurrentQueue<string> messageQueue;
     AndroidJavaObject bluetooth;
     Thread listenerThread;
-	Action<bool> bluetoothEnabledCallback;
+	Action bluetoothEnabledCallback;
 	Action<bool> bluetoothConnectedCallback;
+
+	public FadingText text;
 	
 
 	void Start () {
@@ -34,14 +36,16 @@ public class ObserverManager : MonoBehaviour {
 	{
 		if (messageQueue.Count > 0)
 		{
-			//Parse Messages
+			string str;
+			if (messageQueue.TryDequeue(out str))
+				text.Show(str);
 		}
 	}
 
 
 	#region Bluetooth Settings
 
-	public void EnableBluetooth(Action<bool> onEnable)
+	public void EnableBluetooth(Action onEnable)
     {
 		bluetoothEnabledCallback = onEnable;
 		using (AndroidJavaClass cls = new AndroidJavaClass("aggrathon.vq360.javaplugin.BluetoothSettings"))
@@ -66,12 +70,11 @@ public class ObserverManager : MonoBehaviour {
     {
 		if (result == "true")
 		{
-			if (bluetoothEnabledCallback != null) bluetoothEnabledCallback(true);
+			if (bluetoothEnabledCallback != null) bluetoothEnabledCallback();
 		}
 		else
 		{
 			DebugText.LogImportant("Bluetooth needed for observing");
-			if (bluetoothEnabledCallback != null) bluetoothEnabledCallback(false);
 		}
     }
 
@@ -97,7 +100,7 @@ public class ObserverManager : MonoBehaviour {
 	{
 		if (bluetooth == null)
 			GetDevices();
-		if (bluetooth.Call<bool>("ConnectClient"))
+		if (bluetooth.Call<bool>("ConnectClient", device))
 		{
 			//TODO Set Observer Mode
 			listenerThread = new Thread(Listen);
@@ -106,6 +109,7 @@ public class ObserverManager : MonoBehaviour {
 		else
 		{
 			Disconnect();
+			DebugText.LogImportant("Could not connect to "+device);
 		}
 	}
 
