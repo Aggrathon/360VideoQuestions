@@ -45,6 +45,15 @@ public class ObserverManager : MonoBehaviour {
 	}
 
 
+	public void Send(string message)
+	{
+		if(bluetooth != null)
+		{
+			bluetooth.Call("Send", message);
+		}
+	}
+
+
 	#region Bluetooth Settings
 
 	public void EnableBluetooth(Action onEnable)
@@ -148,6 +157,7 @@ public class ObserverManager : MonoBehaviour {
 		{
 			//TODO Start broadcasting
 			if (bluetoothConnectedCallback != null) bluetoothConnectedCallback(true);
+			Send("Test Message");
 		}
 		else
 		{

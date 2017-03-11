@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class ObserverConnectUI : MonoBehaviour {
 
 	public ObserverManager manager;
+	public GameObject background;
 	public GameObject roleSelection;
 	public GameObject serverConnect;
 	public GameObject clientConnect;
@@ -19,36 +20,43 @@ public class ObserverConnectUI : MonoBehaviour {
 	{
 		if (manager == null)
 			manager = GameObject.FindObjectOfType<ObserverManager>();
-		roleSelection.SetActive(false);
-		serverConnect.SetActive(false);
-		clientConnect.SetActive(false);
+		Close(false);
 	}
 
 
-	public bool Close()
+	public bool Close(bool disconnect = true)
 	{
 		if (roleSelection.activeSelf || serverConnect.activeSelf || clientConnect.activeSelf)
 		{
 			roleSelection.SetActive(false);
 			serverConnect.SetActive(false);
 			clientConnect.SetActive(false);
+			background.SetActive(false);
+			if(disconnect)
+				manager.Disconnect();
 			return true;
 		}
 		return false;
 	}
 
-
-	public void Cancel()
+	private void TempClose()
 	{
-		manager.Disconnect();
-		Close();
+		roleSelection.SetActive(false);
+		serverConnect.SetActive(false);
+		clientConnect.SetActive(false);
+	}
+
+	public void Toggle()
+	{
+		if (!Close())
+			Setup();
 	}
 
 	
 	public void Setup()
 	{
 #if UNITY_ANDROID && !UNITY_EDITOR
-		manager.EnableBluetooth(() => { roleSelection.SetActive(true); });
+		manager.EnableBluetooth(() => { background.SetActive(true); roleSelection.SetActive(true); });
 #else
 		DebugText.LogImportant("Bluetooth only available on Android");
 #endif
@@ -56,8 +64,10 @@ public class ObserverConnectUI : MonoBehaviour {
 
 	public void Server()
 	{
+		TempClose();
+		serverConnect.SetActive(true);
 		manager.WaitForConnection((b) => {
-			Close();
+			Close(false);
 		});
 	}
 
@@ -77,9 +87,11 @@ public class ObserverConnectUI : MonoBehaviour {
 			string device = devices[i];
 			Transform button = deviceList.GetChild(i);
 			button.GetComponent<Button>().onClick.RemoveAllListeners();
-			button.GetComponent<Button>().onClick.AddListener(() => { Close(); manager.Connect(device); });
+			button.GetComponent<Button>().onClick.AddListener(() => { Close(false); manager.Connect(device); });
 			button.GetChild(0).GetComponent<Text>().text = device;
 			button.gameObject.SetActive(true);
 		}
+		TempClose();
+		clientConnect.SetActive(true);
 	}
 }

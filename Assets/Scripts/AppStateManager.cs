@@ -13,6 +13,7 @@ public class AppStateManager : MonoBehaviour {
 	[SerializeField] GameObject menu;
 	[SerializeField] ScenarioManager scenario;
 	[SerializeField] PopupPanel menuInfo;
+	[SerializeField] ObserverConnectUI observerUI;
 
 	AppState state;
 
@@ -27,9 +28,12 @@ public class AppStateManager : MonoBehaviour {
 		switch (state)
 		{
 			case AppState.menu:
-				if(Input.GetKeyUp(KeyCode.Escape) && !menuInfo.Close())
+				if(Input.GetKeyUp(KeyCode.Escape))
 				{
-					Application.Quit();
+					if(!observerUI.Close() && !menuInfo.Close())
+					{
+						Application.Quit();
+					}
 				}
 				else  if (Input.GetKeyUp(KeyCode.Menu))
 				{
