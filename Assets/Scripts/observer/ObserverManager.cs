@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
 public class ObserverManager : MonoBehaviour {
 
-    ConcurrentQueue<string> messageQueue;
-    AndroidJavaObject bluetooth;
+    Queue<string> messageQueue;
+	private readonly object syncLock = new object();
+	AndroidJavaObject bluetooth;
     Thread listenerThread;
 	Action bluetoothEnabledCallback;
 	Action<bool> bluetoothConnectedCallback;
@@ -15,7 +16,7 @@ public class ObserverManager : MonoBehaviour {
 	
 
 	void Start () {
-        messageQueue = new ConcurrentQueue<string>();
+        messageQueue = new Queue<string>();
 	}
 
 	private void OnDestroy()
@@ -34,11 +35,12 @@ public class ObserverManager : MonoBehaviour {
 
 	private void Update()
 	{
-		if (messageQueue.Count > 0)
+		lock (syncLock)
 		{
-			string str;
-			if (messageQueue.TryDequeue(out str))
-				text.Show(str);
+			if (messageQueue.Count > 0)
+			{
+				text.Show(messageQueue.Dequeue());
+			}
 		}
 	}
 
@@ -116,8 +118,10 @@ public class ObserverManager : MonoBehaviour {
 	public void Disconnect()
 	{
 		OnDestroy();
-		if (!messageQueue.IsEmpty)
-			messageQueue = new ConcurrentQueue<string>();
+		lock (syncLock)
+		{
+			messageQueue.Clear();
+		}
 		//TODO Unload Observer
 	}
 
@@ -130,7 +134,11 @@ public class ObserverManager : MonoBehaviour {
     {
         while(bluetooth != null)
         {
-            messageQueue.Enqueue(bluetooth.Call<string>("Listen"));
+			string str = bluetooth.Call<string>("Listen");
+			lock (syncLock)
+			{
+				messageQueue.Enqueue(str);
+			}
         }
     }
 
