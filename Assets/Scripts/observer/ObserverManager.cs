@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using UnityEngine;
-using UnityEngine.VR;
 
 public class ObserverManager : MonoBehaviour {
 
@@ -10,7 +9,8 @@ public class ObserverManager : MonoBehaviour {
 		idle,
 		btserver,
 		broadcaster,
-		observer
+		observer,
+		fake
 	}
 	
 	AndroidJavaObject bluetooth;
@@ -34,11 +34,6 @@ public class ObserverManager : MonoBehaviour {
 
 	private void Update()
 	{
-		if(state != State.idle && bluetooth == null)
-		{
-			Disconnect();
-			return;
-		}
 		switch (state)
 		{
 			case State.btserver:
@@ -82,6 +77,11 @@ public class ObserverManager : MonoBehaviour {
 				{
 					HandleMessage(msg);
 				}
+				mainCamera.transform.rotation = Quaternion.Lerp(mainCamera.transform.rotation, Quaternion.Euler(data.rotation), Time.deltaTime * 2 / sendInterval);
+				break;
+
+			case State.fake:
+				mainCamera.transform.rotation = Quaternion.Lerp(mainCamera.transform.rotation, Quaternion.Euler(data.rotation), Time.deltaTime * 2 / sendInterval);
 				break;
 		}
 	}
@@ -116,8 +116,6 @@ public class ObserverManager : MonoBehaviour {
 				{
 					text.Hide();
 				}
-				mainCamera.transform.rotation = Quaternion.Euler(ndata.rotation);
-
 				data = ndata;
 			}
 			catch (Exception e)
@@ -203,15 +201,16 @@ public class ObserverManager : MonoBehaviour {
 		}
 		else
 		{
+			DebugText.LogError("Could not connect to " + device);
 			Disconnect();
-			DebugText.LogImportant("Could not connect to "+device);
+			DebugText.LogError("Could not connect to "+device);
 		}
 	}
 
 	public void FakeConnect()
 	{
 		appState.EnterObserver();
-		state = State.idle;
+		state = State.fake;
 		StartCoroutine(FakeObserver.ObserveExample(this));
 	}
 

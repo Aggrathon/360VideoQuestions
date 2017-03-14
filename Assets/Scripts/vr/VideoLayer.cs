@@ -65,8 +65,7 @@ public class VideoLayer : MonoBehaviour {
 		}
 		else
 		{
-			vp.Pause();
-			vp.time = 0;
+			vp.Stop();
 			StartCoroutine(Utils.RunLater(() => {
 				if (onLoaded != null) onLoaded();
 				vp.Play();
@@ -97,7 +96,7 @@ public class VideoLayer : MonoBehaviour {
 	void OnDisable()
 	{
 		ClearAction();
-		player.Pause();
+		player.Stop();
 	}
 
 	public void Hide(float speed)
