@@ -68,10 +68,11 @@ public class Permutation
 	{
 		if (iterIndex == array.Length)
 			IterateReset();
-		if (array[iterIndex] < limit)
+		int num = array[iterIndex];
+		if (num < limit)
 		{
 			iterIndex++;
-			return array[iterIndex];
+			return num;
 		}
 		else
 		{

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using UnityEngine;
 using UnityEngine.VR;
 
@@ -24,7 +25,7 @@ public class ObserverManager : MonoBehaviour {
 	public FadingText text;
 	public ScenarioManager scenarioManager;
 	public AppStateManager appState;
-	
+	public FileExplorer fileExplorer;
 
 	void Start () {
 		mainCamera = Camera.main;
@@ -103,7 +104,7 @@ public class ObserverManager : MonoBehaviour {
 				MessageData ndata = new MessageData(msg);
 				if(!scenarioManager.gameObject.activeSelf || ndata.scenario != data.scenario)
 				{
-					scenarioManager.LoadScenario(ndata.scenario, true);
+					scenarioManager.LoadScenario(Path.Combine(fileExplorer.dataFolder, ndata.scenario), true);
 				}
 				if(data.scene != ndata.scene)
 				{
@@ -119,12 +120,11 @@ public class ObserverManager : MonoBehaviour {
 
 				data = ndata;
 			}
-			catch (Exception)
+			catch (Exception e)
 			{
 				data = new MessageData(this);
+				Debug.Log("Could not parse data "+ e.ToString());
 			}
-			//TODO: Remove
-			text.Show(msg);
 		}
 	}
 
@@ -206,6 +206,13 @@ public class ObserverManager : MonoBehaviour {
 			Disconnect();
 			DebugText.LogImportant("Could not connect to "+device);
 		}
+	}
+
+	public void FakeConnect()
+	{
+		appState.EnterObserver();
+		state = State.idle;
+		StartCoroutine(FakeObserver.ObserveExample(this));
 	}
 
 	private void OnDestroy()

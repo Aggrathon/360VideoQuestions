@@ -11,21 +11,21 @@ public struct MessageData
 	{
 		int end = msg.Length;
 		int start = msg.LastIndexOf(',');
-		permutation = int.Parse(msg.Substring(start + 1, end));
+		permutation = int.Parse(msg.Substring(start + 1, end-1-start));
 		end = start;
 		start = msg.LastIndexOf(',', end - 1);
-		float z = float.Parse(msg.Substring(start + 1, end));
+		float z = float.Parse(msg.Substring(start + 1, end - 1 - start));
 		end = start;
 		start = msg.LastIndexOf(',', end - 1);
-		float y = float.Parse(msg.Substring(start + 1, end));
+		float y = float.Parse(msg.Substring(start + 1, end - 1 - start));
 		end = start;
 		start = msg.LastIndexOf(',', end - 1);
-		float x = float.Parse(msg.Substring(start + 1, end));
+		float x = float.Parse(msg.Substring(start + 1, end - 1 - start));
 		rotation = new Vector3(x, y, z);
 		end = start;
 		start = msg.IndexOf(',');
 		scenario = msg.Substring(0, start);
-		scene = msg.Substring(start+1, end);
+		scene = msg.Substring(start+1, end - 1 - start);
 	}
 
 	public MessageData(string scenario, string scene, Vector3 rot, int perm)

@@ -22,6 +22,11 @@ public class ScenarioManager : MonoBehaviour {
 	int startScene = 0;
 	bool observe;
 
+	private void Awake()
+	{
+		logger = GetComponent<ScenarioLogger>();
+	}
+
 	public void LoadScenario(string folder, bool observer = false)
 	{
 		scenarioFolder = folder;
@@ -72,14 +77,12 @@ public class ScenarioManager : MonoBehaviour {
 			startScene = 0;
 			if (!observer)
 			{
-				if (logger == null)
-					logger = GetComponent<ScenarioLogger>();
 				logger.StartLogging(scenarioFolder);
 				stateManager.EnterScenario();
 			}
 			else
 			{
-				stateManager.EnterObserver();
+				gameObject.SetActive(true);
 			}
 			SwitchScene((Scene)null);
 		}
@@ -87,7 +90,7 @@ public class ScenarioManager : MonoBehaviour {
 
 	internal string GetScenarioName()
 	{
-		return scenarioFolder;
+		return Path.GetFileName(scenarioFolder);
 	}
 
 	public string GetSceneName()
@@ -123,25 +126,26 @@ public class ScenarioManager : MonoBehaviour {
 	public void SwitchScene(string name)
 	{
 		if (name == null)
+		{
 			SwitchScene((Scene)null);
+			return;
+		}
 		if (name == "exit")
 		{
 			UnloadScenario();
 			return;
 		}
+
+		Scene newscene = Array.Find<Scene>(scenario.scenes, (scene) => scene.name == name);
+		if (newscene != null)
+		{
+			SwitchScene(newscene);
+		}
 		else
 		{
-			Scene newscene = Array.Find<Scene>(scenario.scenes, (scene) => scene.name == name);
-			if (newscene != null)
-			{
-				SwitchScene(newscene);
-			}
-			else
-			{
-				DebugText.LogError("Scene not defined: " + name);
-				UnloadScenario();
-				return;
-			}
+			DebugText.LogError("Scene not defined: " + name);
+			UnloadScenario();
+			return;
 		}
 	}
 
@@ -179,7 +183,7 @@ public class ScenarioManager : MonoBehaviour {
 				StartCoroutine(Utils.RunLater(() => {
 					if (photoLayer.gameObject.activeSelf)
 						photoLayer.gameObject.SetActive(false);
-					logger.SwitchScene(currentScene.name);
+					logger.SwitchScene(GetSceneName());
 				}, sceneChangeSpeed * 0.5f));
 			}
 			else

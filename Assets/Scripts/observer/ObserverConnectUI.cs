@@ -58,7 +58,8 @@ public class ObserverConnectUI : MonoBehaviour {
 #if UNITY_ANDROID && !UNITY_EDITOR
 		manager.EnableBluetooth(() => { background.SetActive(true); roleSelection.SetActive(true); });
 #else
-		DebugText.LogImportant("Bluetooth only available on Android");
+		DebugText.LogImportant("Bluetooth only available on Android (faking observer)");
+		manager.FakeConnect();
 #endif
 	}
 

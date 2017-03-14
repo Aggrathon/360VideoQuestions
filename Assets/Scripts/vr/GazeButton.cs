@@ -83,7 +83,6 @@ public class GazeButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
 	void Activate()
 	{
-		DebugText.LogError("Click");
 		onActivate.Invoke();
 		progress = 1f;
 		progressbar.fillAmount = progress;
