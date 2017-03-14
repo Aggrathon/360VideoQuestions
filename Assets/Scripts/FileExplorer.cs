@@ -83,7 +83,7 @@ public class FileExplorer : MonoBehaviour {
 			Directory.GetLastAccessTime(dataFolder);
 			Directory.GetDirectories(dataFolder);
 		}
-		catch (UnauthorizedAccessException e)
+		catch (UnauthorizedAccessException)
 		{
 			PermissionRequester.RequestPermisssion((req) =>
 			{

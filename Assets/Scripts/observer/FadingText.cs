@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class FadingText : MonoBehaviour {
 
 	Text text;
-	public float time = 5.0f;
+	public float time = 1.0f;
 	float end;
 
 	void Start () {
@@ -17,6 +17,11 @@ public class FadingText : MonoBehaviour {
 		text.text = str;
 		gameObject.SetActive(true);
 		end = Time.time + time;
+	}
+
+	public void Hide()
+	{
+		gameObject.SetActive(false);
 	}
 
 	private void Update()

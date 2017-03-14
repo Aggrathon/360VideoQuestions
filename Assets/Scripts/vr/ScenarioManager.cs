@@ -20,11 +20,13 @@ public class ScenarioManager : MonoBehaviour {
 	string scenarioFolder;
 	ScenarioLogger logger;
 	int startScene = 0;
+	bool observe;
 
-	public void LoadScenario(string folder)
+	public void LoadScenario(string folder, bool observer = false)
 	{
 		scenarioFolder = folder;
 		scenario = null;
+		this.observe = observer;
 		try {
 			var files = Directory.GetFiles(folder);
 			bool nojson = true;
@@ -66,14 +68,44 @@ public class ScenarioManager : MonoBehaviour {
 		}
 		else
 		{
-			if (logger == null)
-				logger = GetComponent<ScenarioLogger>();
 			scenario.InitScenes();
 			startScene = 0;
-			logger.StartLogging(scenarioFolder);
-			stateManager.EnterScenario();
+			if (!observer)
+			{
+				if (logger == null)
+					logger = GetComponent<ScenarioLogger>();
+				logger.StartLogging(scenarioFolder);
+				stateManager.EnterScenario();
+			}
+			else
+			{
+				stateManager.EnterObserver();
+			}
 			SwitchScene((Scene)null);
 		}
+	}
+
+	internal string GetScenarioName()
+	{
+		return scenarioFolder;
+	}
+
+	public string GetSceneName()
+	{
+		if (currentScene != null)
+			return currentScene.name;
+		else
+			return "";
+	}
+
+	public int GetPermutationNumber()
+	{
+		return uiLayer.permutation.Number;
+	}
+
+	public void SetPermutationNumber(int number)
+	{
+		uiLayer.permutation.SetPermutation(number);
 	}
 
 	void UnloadScenario()
@@ -81,12 +113,17 @@ public class ScenarioManager : MonoBehaviour {
 		scenario = null;
 		currentScene = null;
 		StopAllCoroutines();
-		stateManager.EnterMenu();
+		if (observe)
+			gameObject.SetActive(false);
+		else
+			stateManager.EnterMenu();
 		scenarioFolder = "";
 	}
 
-	void SwitchScene(string name)
+	public void SwitchScene(string name)
 	{
+		if (name == null)
+			SwitchScene((Scene)null);
 		if (name == "exit")
 		{
 			UnloadScenario();
@@ -108,7 +145,7 @@ public class ScenarioManager : MonoBehaviour {
 		}
 	}
 
-	void SwitchScene(Scene scene)
+	public void SwitchScene(Scene scene)
 	{
 		uiLayer.gameObject.SetActive(false);
 		StopAllCoroutines();
@@ -215,6 +252,8 @@ public class ScenarioManager : MonoBehaviour {
 
 	void HandleAction(string action)
 	{
+		if (observe)
+			return;
 		if (action == "exit")
 		{
 			if (startScene < scenario.start.Length)

@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
+using UnityEngine.VR;
 
 public class ObserverManager : MonoBehaviour {
 
@@ -17,56 +16,117 @@ public class ObserverManager : MonoBehaviour {
 	Action bluetoothEnabledCallback;
 	Action<bool> bluetoothConnectedCallback;
 	State state = State.idle;
+	float time;
+	internal Camera mainCamera;
+	MessageData data;
 
+	public float sendInterval = 0.2f;
 	public FadingText text;
+	public ScenarioManager scenarioManager;
+	public AppStateManager appState;
 	
 
 	void Start () {
+		mainCamera = Camera.main;
+		data = new MessageData();
 	}
 
 	private void Update()
 	{
+		if(state != State.idle && bluetooth == null)
+		{
+			Disconnect();
+			return;
+		}
 		switch (state)
 		{
 			case State.btserver:
-				if (bluetooth == null)
+				string message = bluetooth.Call<string>("GetMessage");
+				if(!string.IsNullOrEmpty(message))
 				{
-					Disconnect();
-				}
-				else
-				{
-					string message = bluetooth.Call<string>("GetMessage");
-					if(!string.IsNullOrEmpty(message))
+					if(message == "connected")
 					{
-						if(message == "connected")
-						{
-							//TODO: Set up Broadcast
-							Send("Test Message");
-							if (bluetoothConnectedCallback != null) bluetoothConnectedCallback(true);
-						}
-						else
-						{
-							DebugText.LogImportant(message);
-							if (bluetoothConnectedCallback != null) bluetoothConnectedCallback(false);
-							Disconnect();
-						}
+						state = State.broadcaster;
+						if (bluetoothConnectedCallback != null) bluetoothConnectedCallback(true);
+					}
+					else
+					{
+						DebugText.LogImportant(message);
+						if (bluetoothConnectedCallback != null) bluetoothConnectedCallback(false);
+						Disconnect();
 					}
 				}
 				break;
 
 			case State.broadcaster:
+				time -= Time.deltaTime;
+				if (time < 0)
+				{
+					time += sendInterval;
+					if (scenarioManager.gameObject.activeSelf)
+					{
+						data = new MessageData(this);
+						Send(data.ToString());
+					}
+					else
+					{
+						Send("idle");
+					}
+				}
 				break;
 
 			case State.observer:
 				string msg = bluetooth.Call<string>("GetMessage");
 				if (!string.IsNullOrEmpty(msg))
 				{
-					text.Show(msg);
+					HandleMessage(msg);
 				}
 				break;
 		}
 	}
 
+	public void HandleMessage(string msg)
+	{
+		if(msg == "idle")
+		{
+			text.Show("Waiting for scenario selection");
+			scenarioManager.gameObject.SetActive(false);
+		}
+		else if(msg == "disconnect")
+		{
+			Disconnect();
+		}
+		else
+		{
+			try
+			{
+				MessageData ndata = new MessageData(msg);
+				if(!scenarioManager.gameObject.activeSelf || ndata.scenario != data.scenario)
+				{
+					scenarioManager.LoadScenario(ndata.scenario, true);
+				}
+				if(data.scene != ndata.scene)
+				{
+					scenarioManager.SwitchScene(ndata.scene == "" ? null : ndata.scene);
+					if (data.permutation != ndata.permutation)
+						scenarioManager.SetPermutationNumber(ndata.permutation);
+				}
+				if (string.IsNullOrEmpty(ndata.scene))
+				{
+					text.Hide();
+				}
+				mainCamera.transform.rotation = Quaternion.Euler(ndata.rotation);
+
+				data = ndata;
+			}
+			catch (Exception)
+			{
+				data = new MessageData(this);
+			}
+			//TODO: Remove
+			text.Show(msg);
+		}
+	}
 
 	public void Send(string message)
 	{
@@ -138,7 +198,7 @@ public class ObserverManager : MonoBehaviour {
 			GetDevices();
 		if (bluetooth.Call<bool>("ConnectClient", device))
 		{
-			//TODO Set Observer Mode
+			appState.EnterObserver();
 			state = State.observer;
 		}
 		else
@@ -152,6 +212,10 @@ public class ObserverManager : MonoBehaviour {
 	{
 		if (bluetooth != null)
 		{
+			if (state == State.broadcaster)
+			{
+				Send("disconnect");
+			}
 			bluetooth.Call("Close");
 			bluetooth = null;
 		}
@@ -160,8 +224,9 @@ public class ObserverManager : MonoBehaviour {
 	public void Disconnect()
 	{
 		OnDestroy();
-		//TODO: Unload Observer
+		appState.EnterMenu();
 		state = State.idle;
+		StopAllCoroutines();
 	}
 
 	#endregion

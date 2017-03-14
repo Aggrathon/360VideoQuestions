@@ -7,7 +7,8 @@ public class AppStateManager : MonoBehaviour {
 	public enum AppState
 	{
 		menu,
-		scenario
+		scenario,
+		observer
 	}
 
 	[SerializeField] GameObject menu;
@@ -46,6 +47,12 @@ public class AppStateManager : MonoBehaviour {
 					EnterMenu();
 				}
 				break;
+			case AppState.observer:
+				if (Input.GetKeyUp(KeyCode.Escape))
+				{
+					EnterMenu();
+				}
+				break;
 		}
 	}
 
@@ -56,6 +63,7 @@ public class AppStateManager : MonoBehaviour {
 		state = AppState.menu;
 		menu.SetActive(true);
 		scenario.gameObject.SetActive(false);
+		observerUI.Close(true);
 	}
 
 	public void EnterScenario()
@@ -65,6 +73,16 @@ public class AppStateManager : MonoBehaviour {
 		state = AppState.scenario;
 		menu.SetActive(false);
 		scenario.gameObject.SetActive(true);
+		observerUI.Close(true);
+	}
+
+	public void EnterObserver()
+	{
+		VRSettings.enabled = false;
+		Screen.orientation = ScreenOrientation.Landscape;
+		state = AppState.observer;
+		menu.SetActive(false);
+		observerUI.Close(false);
 	}
 
 #if !UNITY_EDITOR

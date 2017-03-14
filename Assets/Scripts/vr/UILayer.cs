@@ -10,7 +10,14 @@ public class UILayer : MonoBehaviour {
 	
 	public float buttonAngle = 40f;
 	public int options = 1;
-	
+
+	internal Permutation permutation;
+
+	private void Awake()
+	{
+		permutation = new Permutation(transform.childCount - 1, true);
+	}
+
 	void Update ()
 	{
 		//Reset UI rotation
@@ -44,11 +51,11 @@ public class UILayer : MonoBehaviour {
 			System.Array.Copy(question.options, opts, transform.childCount-1);
 			question.options = opts;
 		}
-		options = question.options.Length;
 
-		for (int i = 0; i < question.options.Length; i++)
+		options = question.options.Length;
+		for (int i = 0; i < options; i++)
 		{
-			aggrathon.vq360.data.Option option = question.options[i];
+			aggrathon.vq360.data.Option option = question.options[permutation.IterateNext(options)];
 			transform.GetChild(i+1).GetComponent<VrButton>().Setup(
 				option.text,
 				option.image == "" ? "" : Path.Combine(folderpath, option.image),
@@ -62,6 +69,7 @@ public class UILayer : MonoBehaviour {
 
 		RecalculatePositions();
 		gameObject.SetActive(true);
+		permutation.Randomize();
 	}
 
 	public void RecalculatePositions()
